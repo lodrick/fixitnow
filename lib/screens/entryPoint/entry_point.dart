@@ -5,7 +5,6 @@ import 'package:fixitnow/models/menu.dart';
 import 'package:fixitnow/screens/entryPoint/components/btn_nav_item.dart';
 import 'package:fixitnow/screens/entryPoint/components/menu_btn.dart';
 import 'package:fixitnow/screens/entryPoint/components/side_bar.dart';
-import 'package:fixitnow/screens/home/home_screen.dart';
 import 'package:fixitnow/utils/rive_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
