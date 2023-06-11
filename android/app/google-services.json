@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "302038426084",
+    "project_id": "fixitnow-c7814",
+    "storage_bucket": "fixitnow-c7814.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:302038426084:android:d450fda71381ebd5cc27f1",
+        "android_client_info": {
+          "package_name": "com.fixitnow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "302038426084-cebk28iqudrkgl7bftu5rp0gfge5qp81.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkqDNnvD63sZ_94vH8Kpik8uEzcioXZPY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "302038426084-cebk28iqudrkgl7bftu5rp0gfge5qp81.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
