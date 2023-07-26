@@ -4,7 +4,7 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   firebase_core
-  rive_common
+  geolocator_windows
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

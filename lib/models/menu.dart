@@ -86,7 +86,7 @@ List<Menu> bottomNavItems = [
         artboard: "SEARCH",
         stateMachineName: "SEARCH_Interactivity",
       ),
-      widget: const HomeScreen()),
+      widget: const SearchScreen()),
   Menu(
       title: "Timer",
       rive: RiveModel(

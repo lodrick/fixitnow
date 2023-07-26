@@ -1,5 +1,4 @@
-import 'package:fixitnow/screens/entryPoint/entry_point.dart';
-import 'package:fixitnow/screens/home/home_screen.dart';
+import 'package:fixitnow/screens/onboarding/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -19,7 +18,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const EntryPoint(widget: HomeScreen()),
+      home: const OnboardingScreen(),
     );
   }
 }

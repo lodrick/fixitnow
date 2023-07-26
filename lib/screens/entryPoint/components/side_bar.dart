@@ -1,4 +1,5 @@
 import 'package:fixitnow/models/menu.dart';
+import 'package:fixitnow/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 
 import '../../../utils/rive_utils.dart';
@@ -21,7 +22,7 @@ class _SideBarState extends State<SideBar> {
         width: 288,
         height: double.infinity,
         decoration: const BoxDecoration(
-          color: Color(0xFF17203A),
+          color: CustomColor.primaryColors,
           borderRadius: BorderRadius.all(
             Radius.circular(30),
           ),
