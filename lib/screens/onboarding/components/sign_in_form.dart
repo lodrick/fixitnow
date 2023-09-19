@@ -21,7 +21,7 @@ class _SignInFormState extends State<SignInForm> {
   bool isShowLoading = false;
   bool isShowConfetti = false;
   late PhoneNumber _validPhoneNumber;
-  late bool _isValidPhoneNumber = false;
+  final bool _isValidPhoneNumber = false;
   late SMITrigger error;
   late SMITrigger success;
   late SMITrigger reset;
@@ -287,7 +287,7 @@ class _SignInFormState extends State<SignInForm> {
                 scale: 6,
                 child: RiveAnimation.asset(
                   'assets/RiveAssets/confetti.riv',
-                  onInit: _onCheckRiveInit,
+                  onInit: _onConfettiRiveInit,
                   fit: BoxFit.cover,
                 ),
               )

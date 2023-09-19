@@ -1,4 +1,3 @@
-import 'package:fixitnow/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {

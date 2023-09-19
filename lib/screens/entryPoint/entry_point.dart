@@ -91,7 +91,7 @@ class _EntryPointState extends State<EntryPoint>
                   borderRadius: const BorderRadius.all(
                     Radius.circular(18),
                   ),
-                  child: widget.widget,
+                  child: selectedBottonNav.widget,
                 ),
               ),
             ),

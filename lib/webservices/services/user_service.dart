@@ -1,4 +1,4 @@
-import 'package:fixitnow/models/user_model.dart';
+import 'package:fixitnow/models/user.dart';
 
 abstract class UserServices {
   String createUser(UserModel userModel);

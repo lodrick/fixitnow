@@ -1,5 +1,7 @@
 import 'package:fixitnow/screens/entryPoint/entry_point.dart';
 import 'package:fixitnow/screens/home/home_screen.dart';
+import 'package:fixitnow/screens/notification/notification.dart';
+import 'package:fixitnow/screens/profile/profile_screen.dart';
 import 'package:fixitnow/screens/search/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'rive_model.dart';
@@ -102,7 +104,7 @@ List<Menu> bottomNavItems = [
         artboard: "BELL",
         stateMachineName: "BELL_Interactivity",
       ),
-      widget: const HomeScreen()),
+      widget: const NotificationScreen()),
   Menu(
       title: "Profile",
       rive: RiveModel(
@@ -110,5 +112,5 @@ List<Menu> bottomNavItems = [
         artboard: "USER",
         stateMachineName: "USER_Interactivity",
       ),
-      widget: const HomeScreen()),
+      widget: const ProfileScreen()),
 ];
