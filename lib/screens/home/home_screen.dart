@@ -1,3 +1,7 @@
+import 'package:fixitnow/models/role_model.dart';
+import 'package:fixitnow/models/service.dart';
+import 'package:fixitnow/models/user.dart';
+import 'package:fixitnow/screens/home/components/service_widget.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -8,10 +12,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  @override
+  /*@override
   void initState() {
     super.initState();
-  }
+  }*/
 
   @override
   void dispose() {
@@ -20,6 +24,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    List<ServiceModel> serviceModel = [];
+    Set<RoleModel> setRole = Set();
+    UserModel userModel = UserModel(1, 'Lod', 'Mj', '_about', '_email',
+        '_photoUrl', '_phoneNumber', setRole);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -27,14 +35,13 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 40),
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: Text(
-                  'Home Screen',
-                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.70,
+                width: MediaQuery.of(context).size.width,
+                child: ServiceWidget(
+                  services: serviceModel,
+                  size: MediaQuery.of(context).size,
+                  userModel: userModel,
                 ),
               ),
             ],

@@ -22,11 +22,44 @@ dependencies:
   #Firebase
   firebase_core: ^2.11.0
   firebase_auth: ^4.5.0
+  firebase_core_web: ^2.0.1
+  cloud_firestore_web: ^3.0.3
+  firebase_storage: ^11.0.3
+  cloud_firestore: ^4.0.3  
 
   #GeoLocation
   geolocator: ^8.2.1
   geocoding: ^2.0.4
   google_maps_flutter: ^2.1.4
+
+  #Utils plugins
+  google_fonts: ^4.0.4
+  flutter_screenutil: ^5.9.0
+  font_awesome_flutter: ^10.5.0
+
+  #flutter_settings_screens: ^0.2.0
+  shared_preferences: ^2.0.8
+  datetime_picker_formfield: ^2.0.0
+  fluttertoast: ^8.0.8
+  flutter_launcher_icons: ^0.9.2
+  pixel_perfect: ^1.1.1
+  flutter_rating_bar: ^4.0.0
+  dropdown_button2: ^1.4.0
+
+  #Flutter Secure storage
+  #flutter_secure_storage: ^5.0.2
+  #flutter_secure_storage_web: ^1.0.2
+  
+  #Image
+  image_picker: ^0.8.4+4
+  image_cropper: ^1.4.1
+  camera: ^0.10.0+3
+  path_provider: ^2.0.11
+  path:
+  intl: ^0.17.0
+
+  auto_size_text: ^3.0.0
+
 
 dev_dependencies:
   flutter_test:

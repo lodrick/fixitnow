@@ -1,3 +1,4 @@
+import 'package:fixitnow/screens/chat/chat.dart';
 import 'package:fixitnow/screens/entryPoint/entry_point.dart';
 import 'package:fixitnow/screens/home/home_screen.dart';
 import 'package:fixitnow/screens/notification/notification.dart';
@@ -74,11 +75,11 @@ List<Menu> sidebarMenus2 = [
 
 List<Menu> bottomNavItems = [
   Menu(
-      title: "Chat",
+      title: "Home",
       rive: RiveModel(
         src: "assets/RiveAssets/icons.riv",
-        artboard: "CHAT",
-        stateMachineName: "CHAT_Interactivity",
+        artboard: "HOME",
+        stateMachineName: "HOME_interactivity",
       ),
       widget: const HomeScreen()),
   Menu(
@@ -90,13 +91,13 @@ List<Menu> bottomNavItems = [
       ),
       widget: const SearchScreen()),
   Menu(
-      title: "Timer",
+      title: "Chat",
       rive: RiveModel(
         src: "assets/RiveAssets/icons.riv",
-        artboard: "TIMER",
-        stateMachineName: "TIMER_Interactivity",
+        artboard: "CHAT",
+        stateMachineName: "CHAT_Interactivity",
       ),
-      widget: const HomeScreen()),
+      widget: const ChatScreen()),
   Menu(
       title: "Notification",
       rive: RiveModel(
