@@ -1,4 +1,5 @@
 import 'package:fixitnow/screens/onboarding/onboarding_screen.dart';
+import 'package:fixitnow/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -23,8 +24,12 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: 'Fix It Now',
             theme: ThemeData(
+              primaryColor: CustomColor.primaryColors,
               scaffoldBackgroundColor: const Color(0xFFEEF1F8),
-              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: CustomColor.primaryColors,
+              ),
+              fontFamily: 'Intel',
               useMaterial3: true,
             ),
             home: const OnboardingScreen(),

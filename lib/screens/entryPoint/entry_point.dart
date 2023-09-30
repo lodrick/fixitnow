@@ -163,8 +163,10 @@ class _EntryPointState extends State<EntryPoint>
                         updateSelectedBtmNav(navBar);
                       },
                       riveOnInit: (artboard) {
-                        navBar.rive.status = RiveUtils.getRiveInput(artboard,
-                            stateMachineName: navBar.rive.stateMachineName);
+                        navBar.rive.status = RiveUtils.getRiveInput(
+                          artboard,
+                          stateMachineName: navBar.rive.stateMachineName,
+                        );
                       },
                       selectedNav: selectedBottonNav,
                     );
