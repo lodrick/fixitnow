@@ -1,9 +1,12 @@
 import 'package:fixitnow/models/role_model.dart';
 import 'package:fixitnow/models/user.dart';
+import 'package:fixitnow/screens/chat/components/custom_card.dart';
+import 'package:fixitnow/screens/chat/components/search_user_chat.dart';
+import 'package:fixitnow/screens/chat/peer_chat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ChatBodyWidget extends StatefulWidget {
+class ChatBodyWidget extends StatelessWidget {
   final List<UserModel> users;
   final int currentUserId;
   final Size size;
@@ -15,17 +18,11 @@ class ChatBodyWidget extends StatefulWidget {
   });
 
   @override
-  State<ChatBodyWidget> createState() => _ChatBodyWidgetState();
-}
-
-class _ChatBodyWidgetState extends State<ChatBodyWidget> {
-  @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200.0.h,
+      height: size.height * 0.80,
       padding: EdgeInsets.symmetric(
-        horizontal: 10.w,
-        vertical: 10.h,
+        vertical: size.height.h * 0.012,
       ),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -38,28 +35,52 @@ class _ChatBodyWidgetState extends State<ChatBodyWidget> {
     );
   }
 
-  Widget buildChats() => ListView.builder(
-        physics: const BouncingScrollPhysics(),
-        itemBuilder: (context, index) {
-          Set<RoleModel> setRole = {};
-          final user = widget.users.isNotEmpty
-              ? widget.users[index]
-              : UserModel(1, '_name', '_surname', '_about', '_email',
-                  '_photoUrl', '_phoneNumber', setRole);
-          String fullName = '${user.getName} ${user.getSurname}';
-          return ListTile(
-            onTap: () {},
-            leading: CircleAvatar(
-              radius: 25.r,
-              backgroundImage: const NetworkImage(
-                  'https://cdn4.iconfinder.com/data/icons/basic-interface-overcolor/512/user-512.png'),
-            ),
-            title: Text(
-              fullName,
-              style: const TextStyle(color: Colors.black),
-            ),
-          );
-        },
-        itemCount: widget.users.length,
-      );
+  Widget buildChats() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        SearchUserChart(
+          searchText: 'Search user',
+          hitSearchText: 'Search for chats and people',
+          size: size,
+          onPress: () {},
+        ),
+        SizedBox(
+          height: size.height.h * 0.002,
+        ),
+        ListView.builder(
+          physics: const BouncingScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: 2,
+          itemBuilder: (context, index) {
+            Set<RoleModel> setRole = {};
+            final peerUser = users.isNotEmpty
+                ? users[index]
+                : UserModel(
+                    1,
+                    '_name',
+                    '_surname',
+                    '_about',
+                    '_email',
+                    'https://cdn4.iconfinder.com/data/icons/basic-interface-overcolor/512/user-512.png',
+                    '_phoneNumber',
+                    setRole);
+            return CustomCard(
+              userModel: peerUser,
+              press: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => PeerChatScreen(
+                      peerUser: peerUser,
+                    ),
+                  ),
+                );
+              },
+            );
+          },
+        ),
+      ],
+    );
+  }
 }

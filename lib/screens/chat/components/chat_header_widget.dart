@@ -1,5 +1,5 @@
-import 'package:fixitnow/models/role_model.dart';
 import 'package:fixitnow/models/user.dart';
+import 'package:fixitnow/screens/chat/components/chat_round_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -18,28 +18,38 @@ class ChatHeaderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: size.width.w * 0.01,
+        horizontal: size.width.w * 0.015,
         vertical: size.height.h * 0.00,
       ),
-      width: double.infinity,
-      child: Column(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(
-            width: size.width.h * 0.75,
             child: Text(
-              'Favourites',
+              'Chats',
               style: TextStyle(
-                color: Colors.black54,
-                fontSize: 25.sp,
-                fontWeight: FontWeight.w600,
+                color: Colors.black,
+                fontSize: 27.sp,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
-          SizedBox(
-            height: size.height.h * 0.002,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              ChatRoundButton(press: () {}, iconData: Icons.add, size: size),
+              SizedBox(
+                width: size.width.w * 0.03,
+              ),
+              ChatRoundButton(
+                  press: () {},
+                  iconData: Icons.stay_primary_landscape_rounded,
+                  size: size),
+            ],
           ),
-          SizedBox(
+
+          /*SizedBox(
             height: size.height.h * 0.087,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
@@ -68,7 +78,7 @@ class ChatHeaderWidget extends StatelessWidget {
                 }
               },
             ),
-          ),
+          ),*/
         ],
       ),
     );
