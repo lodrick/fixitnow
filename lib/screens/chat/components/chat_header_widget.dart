@@ -36,7 +36,8 @@ class ChatHeaderWidget extends StatelessWidget {
             ),
           ),
           Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               ChatRoundButton(press: () {}, iconData: Icons.add, size: size),
               SizedBox(

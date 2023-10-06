@@ -4,6 +4,8 @@ class CustomColor {
   CustomColor._();
 
   static const Color primaryColors = Color(0xFF184F59);
+  //static const Color primaryColorLight = Color(0xFF58E3E1);
+  static const Color primaryColorLight = Color(0xFFFFEFEE);
   static const Color primaryScaffoldBackgroundColor = Color(0xFFEEF1F8);
   static const Color mainColor = Color.fromRGBO(48, 96, 96, 1.0);
   static const Color startingColor = Color.fromRGBO(70, 112, 112, 1.0);

@@ -1,4 +1,3 @@
-import 'package:fixitnow/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -24,7 +23,7 @@ class ProfileHeaderWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                const BackButton(color: CustomColor.darkTextColor),
+                const BackButton(color: Colors.white),
                 CircleAvatar(
                   radius: 19.r,
                   backgroundImage: NetworkImage(imageUrl),
@@ -34,8 +33,8 @@ class ProfileHeaderWidget extends StatelessWidget {
                   child: Text(
                     name,
                     style: TextStyle(
-                      fontSize: 20.sp,
-                      color: CustomColor.darkTextColor,
+                      fontSize: 18.sp,
+                      color: Colors.white,
                       fontWeight: FontWeight.w600,
                     ),
                     overflow: TextOverflow.ellipsis,
@@ -46,14 +45,14 @@ class ProfileHeaderWidget extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.phone,
-                      size: 20.sp,
-                      color: CustomColor.darkTextColor,
+                      size: 18.sp,
+                      color: Colors.white,
                     ),
                     SizedBox(width: 8.w),
                     Icon(
                       Icons.video_chat,
-                      size: 20.sp,
-                      color: CustomColor.darkTextColor,
+                      size: 18.sp,
+                      color: Colors.white,
                     ),
                   ],
                 ),

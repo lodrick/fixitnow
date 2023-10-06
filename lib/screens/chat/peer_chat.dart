@@ -1,13 +1,19 @@
 import 'package:fixitnow/models/user.dart';
 import 'package:fixitnow/screens/chat/components/messages_widget.dart';
+import 'package:fixitnow/screens/chat/components/new_message_widget.dart';
 import 'package:fixitnow/screens/chat/components/profile_header_widget.dart';
 import 'package:fixitnow/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PeerChatScreen extends StatefulWidget {
-  const PeerChatScreen({super.key, required this.peerUser});
+  const PeerChatScreen({
+    super.key,
+    required this.peerUser,
+    required this.currentUser,
+  });
   final UserModel peerUser;
+  final UserModel currentUser;
 
   @override
   State<PeerChatScreen> createState() => _PeerChatScreenState();
@@ -19,9 +25,11 @@ class _PeerChatScreenState extends State<PeerChatScreen> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       extendBodyBehindAppBar: true,
-      backgroundColor: CustomColor.primaryScaffoldBackgroundColor,
+      backgroundColor: CustomColor.primaryColors,
       body: SafeArea(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             ProfileHeaderWidget(
               name: '${widget.peerUser.getName} ${widget.peerUser.getSurname}',
@@ -42,10 +50,14 @@ class _PeerChatScreenState extends State<PeerChatScreen> {
                   ),
                 ),
                 child: MessagesWidget(
-                  currentUser: widget.peerUser,
+                  currentUser: widget.currentUser,
                   peerUser: widget.peerUser,
                 ),
               ),
+            ),
+            NewMessageWidget(
+              currentUser: widget.currentUser,
+              peerUser: widget.peerUser,
             ),
           ],
         ),

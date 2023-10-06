@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChatBodyWidget extends StatelessWidget {
   final List<UserModel> users;
+  //final UserModel currentUser = ;
   final int currentUserId;
   final Size size;
   const ChatBodyWidget({
@@ -36,6 +37,17 @@ class ChatBodyWidget extends StatelessWidget {
   }
 
   Widget buildChats() {
+    Set<RoleModel> setRole = {};
+    UserModel currentUser = UserModel(
+        1,
+        '_name',
+        '_surname',
+        '_about',
+        '_email',
+        'https://cdn4.iconfinder.com/data/icons/basic-interface-overcolor/512/user-512.png',
+        '_phoneNumber',
+        setRole);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -73,6 +85,7 @@ class ChatBodyWidget extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (context) => PeerChatScreen(
                       peerUser: peerUser,
+                      currentUser: currentUser,
                     ),
                   ),
                 );

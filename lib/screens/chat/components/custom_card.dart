@@ -36,7 +36,7 @@ class CustomCard extends StatelessWidget {
               ],
             ),*/
             trailing: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(height: 4),
