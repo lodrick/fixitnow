@@ -1,4 +1,4 @@
-import 'package:fixitnow/models/user.dart';
+import 'package:fixitnow/models/user_model.dart';
 import 'package:fixitnow/screens/chat/components/chat_body_widget.dart';
 import 'package:fixitnow/screens/chat/components/chat_header_widget.dart';
 import 'package:fixitnow/utils/custom_color.dart';
@@ -15,7 +15,7 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  List<UserModel> users = [];
+  //List<UserModel> users = users;
   int userId = 2; //todo to use it as a parameter
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,6 @@ class _ChatScreenState extends State<ChatScreen> {
         child: Column(
           children: <Widget>[
             ChatHeaderWidget(
-              users: users,
               currentUserId: userId,
               size: size,
             ),

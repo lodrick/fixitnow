@@ -104,3 +104,11 @@ class MessageModel {
     return _updatedAt;
   }
 }
+
+List<MessageModel> messages = [
+  MessageModel(1, 1, 2, "_text", true, true, 0, DateTime.now(), DateTime.now()),
+  MessageModel(2, 1, 2, "_text", true, true, 0, DateTime.now(), DateTime.now()),
+  MessageModel(3, 1, 2, "_text", true, true, 0, DateTime.now(), DateTime.now()),
+  MessageModel(4, 2, 1, "_text", true, true, 0, DateTime.now(), DateTime.now()),
+  MessageModel(5, 2, 2, "_text", true, true, 0, DateTime.now(), DateTime.now()),
+];

@@ -1,6 +1,6 @@
 import 'package:fixitnow/models/role_model.dart';
 import 'package:fixitnow/models/service.dart';
-import 'package:fixitnow/models/user.dart';
+import 'package:fixitnow/models/user_model.dart';
 import 'package:fixitnow/screens/home/components/round_button.dart';
 import 'package:fixitnow/screens/home/components/service_widget.dart';
 import 'package:flutter/material.dart';

@@ -95,3 +95,34 @@ class UserModel {
     roleModels = roleModels;
   }
 }
+
+Set<RoleModel> setRole = {};
+List<UserModel> users = [
+  UserModel(
+      2,
+      'Sindile',
+      'Moyan',
+      '_about',
+      'sindile@gmail.com',
+      'https://cdn4.iconfinder.com/data/icons/basic-interface-overcolor/512/user-512.png',
+      '_phoneNumber',
+      setRole),
+  UserModel(
+      3,
+      'Alwande',
+      'Mpanze',
+      '_about',
+      'alwande@gmail.com',
+      'https://cdn4.iconfinder.com/data/icons/basic-interface-overcolor/512/user-512.png',
+      '_phoneNumber',
+      setRole),
+  UserModel(
+      4,
+      'Dave',
+      'Sisty',
+      '_about',
+      'dave@gmail.com',
+      'https://cdn4.iconfinder.com/data/icons/basic-interface-overcolor/512/user-512.png',
+      '_phoneNumber',
+      setRole),
+];

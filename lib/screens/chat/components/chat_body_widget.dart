@@ -1,5 +1,5 @@
 import 'package:fixitnow/models/role_model.dart';
-import 'package:fixitnow/models/user.dart';
+import 'package:fixitnow/models/user_model.dart';
 import 'package:fixitnow/screens/chat/components/custom_card.dart';
 import 'package:fixitnow/screens/chat/components/search_user_chat.dart';
 import 'package:fixitnow/screens/chat/peer_chat.dart';
@@ -40,10 +40,10 @@ class ChatBodyWidget extends StatelessWidget {
     Set<RoleModel> setRole = {};
     UserModel currentUser = UserModel(
         1,
-        '_name',
-        '_surname',
+        'Lodrick',
+        'Mpanze',
         '_about',
-        '_email',
+        'lodrick@gmail.com',
         'https://cdn4.iconfinder.com/data/icons/basic-interface-overcolor/512/user-512.png',
         '_phoneNumber',
         setRole);
@@ -64,20 +64,10 @@ class ChatBodyWidget extends StatelessWidget {
         ListView.builder(
           physics: const BouncingScrollPhysics(),
           shrinkWrap: true,
-          itemCount: 2,
+          itemCount: users.length,
           itemBuilder: (context, index) {
-            Set<RoleModel> setRole = {};
-            final peerUser = users.isNotEmpty
-                ? users[index]
-                : UserModel(
-                    1,
-                    '_name',
-                    '_surname',
-                    '_about',
-                    '_email',
-                    'https://cdn4.iconfinder.com/data/icons/basic-interface-overcolor/512/user-512.png',
-                    '_phoneNumber',
-                    setRole);
+            final peerUser = users[index];
+
             return CustomCard(
               userModel: peerUser,
               press: () {

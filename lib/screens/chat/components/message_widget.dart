@@ -1,5 +1,5 @@
 import 'package:fixitnow/models/message_model.dart';
-import 'package:fixitnow/models/user.dart';
+import 'package:fixitnow/models/user_model.dart';
 import 'package:fixitnow/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

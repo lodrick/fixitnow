@@ -1,5 +1,5 @@
 import 'package:fixitnow/models/product.dart';
-import 'package:fixitnow/models/user.dart';
+import 'package:fixitnow/models/user_model.dart';
 
 class ServiceModel {
   int? _serviceId;

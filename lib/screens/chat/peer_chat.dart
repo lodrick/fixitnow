@@ -1,4 +1,4 @@
-import 'package:fixitnow/models/user.dart';
+import 'package:fixitnow/models/user_model.dart';
 import 'package:fixitnow/screens/chat/components/messages_widget.dart';
 import 'package:fixitnow/screens/chat/components/new_message_widget.dart';
 import 'package:fixitnow/screens/chat/components/profile_header_widget.dart';
