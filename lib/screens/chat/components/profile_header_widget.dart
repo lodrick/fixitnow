@@ -1,3 +1,4 @@
+import 'package:fixitnow/screens/notification/components/circle_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -23,7 +24,15 @@ class ProfileHeaderWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                const BackButton(color: Colors.white),
+                CircleButton(
+                  press: () {
+                    Navigator.of(context).pop();
+                  },
+                  size: size,
+                  height: 28.0,
+                  width: 28.0,
+                  assetsUrl: 'assets/icons/icon-back.png',
+                ),
                 CircleAvatar(
                   radius: 19.r,
                   backgroundImage: NetworkImage(imageUrl),

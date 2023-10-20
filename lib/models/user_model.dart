@@ -102,7 +102,7 @@ List<UserModel> users = [
       2,
       'Sindile',
       'Moyan',
-      '_about',
+      'Certified Personal Trainer and Nutritionist with years of experience in creating effective diets and training plans focused on achieving individual customers goals in a smooth way.',
       'sindile@gmail.com',
       'https://cdn4.iconfinder.com/data/icons/basic-interface-overcolor/512/user-512.png',
       '_phoneNumber',

@@ -1,7 +1,7 @@
 import 'package:fixitnow/screens/chat/chat.dart';
 import 'package:fixitnow/screens/entryPoint/entry_point.dart';
 import 'package:fixitnow/screens/home/home_screen.dart';
-import 'package:fixitnow/screens/notification/notification.dart';
+import 'package:fixitnow/screens/notification/notifications.dart';
 import 'package:fixitnow/screens/profile/profile_screen.dart';
 import 'package:fixitnow/screens/search/search_screen.dart';
 import 'package:flutter/material.dart';
@@ -105,7 +105,7 @@ List<Menu> bottomNavItems = [
         artboard: "BELL",
         stateMachineName: "BELL_Interactivity",
       ),
-      widget: const NotificationScreen()),
+      widget: const NotificationsScreen()),
   Menu(
       title: "Profile",
       rive: RiveModel(
