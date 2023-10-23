@@ -53,7 +53,7 @@ void showCustomDialog(BuildContext context, {required ValueChanged onValue}) {
                         textAlign: TextAlign.center,
                       ),
                     ),
-                    const SignInForm(),
+                    const Expanded(child: SignInForm()),
                     /*const Row(
                       children: [
                         Expanded(
@@ -73,7 +73,7 @@ void showCustomDialog(BuildContext context, {required ValueChanged onValue}) {
                       ],
                     ),*/
                     const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 24),
+                      padding: EdgeInsets.symmetric(vertical: 3),
                       child: Text(
                         "Contact us on Email, Apple or Google",
                         style: TextStyle(color: Colors.black54),

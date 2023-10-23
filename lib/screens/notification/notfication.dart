@@ -73,6 +73,10 @@ class NotificationScreen extends StatelessWidget {
                             size: size,
                             height: 38.5,
                             width: 38.5,
+                            edgeInsets: EdgeInsets.only(
+                              top: size.height * 0.02,
+                              bottom: size.height * 0.006,
+                            ),
                             assetsUrl: 'assets/icons/icon-back.png',
                           ),
                         ],
@@ -148,3 +152,10 @@ class NotificationScreen extends StatelessWidget {
         ),
       );
 }
+/*
+margin: EdgeInsets.only(
+            top: size.height * 0.02,
+            bottom: size.height * 0.006,
+          ),
+
+*/

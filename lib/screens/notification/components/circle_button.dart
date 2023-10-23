@@ -9,11 +9,13 @@ class CircleButton extends StatelessWidget {
     required this.assetsUrl,
     required this.height,
     required this.width,
+    required this.edgeInsets,
   });
   final VoidCallback press;
   final String assetsUrl;
   final Size size;
   final double height, width;
+  final EdgeInsets edgeInsets;
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +23,7 @@ class CircleButton extends StatelessWidget {
       child: GestureDetector(
         onTap: press,
         child: Container(
-          margin: EdgeInsets.only(
-            top: size.height * 0.02,
-            bottom: size.height * 0.006,
-          ),
+          margin: edgeInsets,
           height: height.h,
           width: width.w,
           padding: EdgeInsets.symmetric(
