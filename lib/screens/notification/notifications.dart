@@ -34,7 +34,10 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             SizedBox(
-              height: 60.h,
+              height: 55.h,
+            ),
+            SizedBox(
+              height: 40.h,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,

@@ -1,6 +1,9 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fixitnow/screens/entryPoint/entry_point.dart';
+import 'package:fixitnow/screens/home/home_screen.dart';
+import 'package:fixitnow/screens/register/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
@@ -17,6 +20,10 @@ abstract class LoginStoreBase with Store {
   bool isOtpLoading = false;
   @observable
   bool isShowPasscode = false;
+  @observable
+  bool isShowLoading = false;
+  @observable
+  bool isShowConfetti = false;
 
   @observable
   GlobalKey<ScaffoldMessengerState> loginScaffoldKey =
@@ -144,10 +151,17 @@ abstract class LoginStoreBase with Store {
     firebaseUser = result.user;
 
     if (firebaseUser!.phoneNumber!.isNotEmpty) {
-      firebaseUser!.uid;
-      //TODO to add main page
+      debugPrint('firebaseUser!.uid: ${firebaseUser!.uid}');
+      isShowLoading = true;
+      isShowConfetti = false;
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+              builder: (_) => const EntryPoint(widget: HomeScreen())),
+          (route) => false);
     } else {
-      //TODO to add the profile add pages
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (_) => const RegisterScreen()),
+          (route) => false);
     }
     isloginLoading = false;
     isOtpLoading = false;

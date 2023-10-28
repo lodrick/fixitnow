@@ -12,6 +12,8 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  DateTime backPressedTime = DateTime.now();
+
   Widget inputTextField(
       {required IconData iconData,
       required String hintText,
@@ -57,28 +59,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 243, 243, 243),
-      extendBody: true,
-      body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              expandedHeight: screenHeight * .25,
-              //backgroundColor: const Color.fromARGB(255, 243, 243, 243),
-              floating: true,
-              pinned: true,
-              leading: Container(
-                alignment: Alignment.center,
-                height: screenHeight * .25,
+    return WillPopScope(
+      onWillPop: () => _onBackButtonBoubleClicked(context),
+      child: Scaffold(
+        backgroundColor: const Color.fromARGB(255, 243, 243, 243),
+        extendBody: true,
+        body: SafeArea(
+          child: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                expandedHeight: screenHeight * .25,
+                //backgroundColor: const Color.fromARGB(255, 243, 243, 243),
+                floating: true,
+                pinned: true,
+                leading: Container(
+                  alignment: Alignment.center,
+                  height: screenHeight * .25,
+                ),
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Container(),
+                  collapseMode: CollapseMode.pin,
+                ),
               ),
-              flexibleSpace: FlexibleSpaceBar(
-                background: Container(),
-                collapseMode: CollapseMode.pin,
-              ),
-            ),
-            buildRegisterPane(context),
-          ],
+              buildRegisterPane(context),
+            ],
+          ),
         ),
       ),
     );
@@ -145,6 +150,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
         ),
       );
+
+  void toast(BuildContext context, String text) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(
+        text,
+        textAlign: TextAlign.center,
+      ),
+      behavior: SnackBarBehavior.floating,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
+      backgroundColor: CustomColor.primaryColors.withOpacity(0.70),
+    ));
+  }
+
+  Future<bool> _onBackButtonBoubleClicked(BuildContext context) async {
+    return false;
+  }
 }
 /*
 Column(

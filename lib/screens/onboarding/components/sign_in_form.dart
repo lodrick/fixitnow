@@ -1,5 +1,4 @@
 import 'package:fixitnow/screens/loader_hub.dart';
-import 'package:fixitnow/screens/register/register_screen.dart';
 import 'package:fixitnow/stores/login_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -23,8 +22,8 @@ class _SignInFormState extends State<SignInForm> {
   final TextEditingController phoneController = TextEditingController();
   //final TextEditingController _pinPutController = TextEditingController();
   //final FocusNode _pinPutNode = FocusNode();
-  bool isShowLoading = false;
-  bool isShowConfetti = false;
+  //bool isShowLoading = false;
+  //bool isShowConfetti = false;
   late PhoneNumber _validPhoneNumber;
   //final bool _isValidPhoneNumber = false;
   late SMITrigger error;
@@ -49,7 +48,7 @@ class _SignInFormState extends State<SignInForm> {
     confetti = controller.findInput('Trigger explosion') as SMITrigger;
   }
 
-  void signIn(BuildContext context) {
+  /*void signIn(BuildContext context) {
     setState(() {
       isShowConfetti = true;
       isShowLoading = true;
@@ -80,7 +79,7 @@ class _SignInFormState extends State<SignInForm> {
         });
       }
     });
-  }
+  }*/
 
   @override
   void dispose() {
@@ -131,9 +130,11 @@ class _SignInFormState extends State<SignInForm> {
 
                               if (number.phoneNumber!.isNotEmpty &&
                                   number.phoneNumber!.length == 12) {
+                                debugPrint(
+                                    'number.phoneNumber ${_validPhoneNumber.phoneNumber}');
                                 loginStore.getCodeWithPhoneNumber(
                                   context,
-                                  number.phoneNumber.toString(),
+                                  _validPhoneNumber.phoneNumber.toString(),
                                 );
                               }
                             },
@@ -204,8 +205,7 @@ class _SignInFormState extends State<SignInForm> {
                                       debugPrint(
                                           '_validPhoneNumber: ${_validPhoneNumber.phoneNumber}');
                                       loginStore.validateOtpAndLogin(
-                                          context, pin);
-                                      signIn(context);
+                                          context, pin.trim());
                                     }
                                   },
                                 ),
@@ -214,7 +214,7 @@ class _SignInFormState extends State<SignInForm> {
                       ],
                     ),
                   ),
-                  isShowLoading
+                  loginStore.isShowLoading
                       ? CustomPositioned(
                           child: RiveAnimation.asset(
                             'assets/RiveAssets/check.riv',
@@ -223,7 +223,7 @@ class _SignInFormState extends State<SignInForm> {
                           ),
                         )
                       : const SizedBox(),
-                  isShowConfetti
+                  loginStore.isShowConfetti
                       ? CustomPositioned(
                           child: RiveAnimation.asset(
                             'assets/RiveAssets/confetti.riv',

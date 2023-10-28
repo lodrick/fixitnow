@@ -42,8 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Container(
                   height: 60.0.h,
                   padding: EdgeInsets.symmetric(horizontal: size.width * .02),
-                  child: //const SearchBarWidget()
-                      Row(
+                  child: Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [

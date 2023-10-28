@@ -57,6 +57,38 @@ mixin _$LoginStore on LoginStoreBase, Store {
     });
   }
 
+  late final _$isShowLoadingAtom =
+      Atom(name: 'LoginStoreBase.isShowLoading', context: context);
+
+  @override
+  bool get isShowLoading {
+    _$isShowLoadingAtom.reportRead();
+    return super.isShowLoading;
+  }
+
+  @override
+  set isShowLoading(bool value) {
+    _$isShowLoadingAtom.reportWrite(value, super.isShowLoading, () {
+      super.isShowLoading = value;
+    });
+  }
+
+  late final _$isShowConfettiAtom =
+      Atom(name: 'LoginStoreBase.isShowConfetti', context: context);
+
+  @override
+  bool get isShowConfetti {
+    _$isShowConfettiAtom.reportRead();
+    return super.isShowConfetti;
+  }
+
+  @override
+  set isShowConfetti(bool value) {
+    _$isShowConfettiAtom.reportWrite(value, super.isShowConfetti, () {
+      super.isShowConfetti = value;
+    });
+  }
+
   late final _$loginScaffoldKeyAtom =
       Atom(name: 'LoginStoreBase.loginScaffoldKey', context: context);
 
@@ -147,6 +179,8 @@ mixin _$LoginStore on LoginStoreBase, Store {
 isloginLoading: ${isloginLoading},
 isOtpLoading: ${isOtpLoading},
 isShowPasscode: ${isShowPasscode},
+isShowLoading: ${isShowLoading},
+isShowConfetti: ${isShowConfetti},
 loginScaffoldKey: ${loginScaffoldKey},
 otpScaffoldKey: ${otpScaffoldKey},
 firebaseUser: ${firebaseUser}
