@@ -30,8 +30,17 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     List<ServiceModel> serviceModel = [];
     Set<RoleModel> setRole = {};
-    UserModel userModel = UserModel(1, 'Lod', 'Mj', '_about', '_email',
-        '_photoUrl', '_phoneNumber', setRole);
+    UserModel userModel = UserModel(
+      1,
+      'sdfsdfsdfsdfsdfsdf',
+      'Lod',
+      'Mj',
+      '_about',
+      '_email',
+      '_photoUrl',
+      '_phoneNumber',
+      setRole,
+    );
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(

@@ -53,12 +53,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget buildName(UserModel userModel) => Column(
         children: <Widget>[
           Text(
-            '${userModel.getName} ${userModel.getSurname}',
+            '${userModel.name} ${userModel.surname}',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.sp),
           ),
           const SizedBox(height: 4),
           Text(
-            userModel.getEmail,
+            userModel.email,
             style: const TextStyle(color: Colors.grey),
           ),
         ],
@@ -80,7 +80,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             const SizedBox(height: 16),
             Text(
-              userModel.getAbout,
+              userModel.about,
               style: const TextStyle(fontSize: 16, height: 1.4),
             ),
           ],

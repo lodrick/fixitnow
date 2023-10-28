@@ -40,6 +40,7 @@ class ChatBodyWidget extends StatelessWidget {
     Set<RoleModel> setRole = {};
     UserModel currentUser = UserModel(
         1,
+        'sdfsdfsdfsdfsdfsdf',
         'Lodrick',
         'Mpanze',
         '_about',

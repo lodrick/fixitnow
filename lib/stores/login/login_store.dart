@@ -1,11 +1,14 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fixitnow/models/user_model.dart';
 import 'package:fixitnow/screens/entryPoint/entry_point.dart';
 import 'package:fixitnow/screens/home/home_screen.dart';
 import 'package:fixitnow/screens/register/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
+import 'package:http/http.dart' as http;
 
 part 'login_store.g.dart';
 
@@ -13,6 +16,7 @@ class LoginStore = LoginStoreBase with _$LoginStore;
 
 abstract class LoginStoreBase with Store {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final String uri = 'http://10.0.0.107:9090/api';
   String actualCode = '';
   @observable
   bool isloginLoading = false;
@@ -24,6 +28,8 @@ abstract class LoginStoreBase with Store {
   bool isShowLoading = false;
   @observable
   bool isShowConfetti = false;
+  @observable
+  bool isRegisterLoading = false;
 
   @observable
   GlobalKey<ScaffoldMessengerState> loginScaffoldKey =
@@ -35,6 +41,9 @@ abstract class LoginStoreBase with Store {
 
   @observable
   User? firebaseUser;
+
+  @observable
+  UserModel? userModel;
 
   @action
   Future<bool> isAlreadyAuthenticated() async {
@@ -112,7 +121,7 @@ abstract class LoginStoreBase with Store {
       },
       codeAutoRetrievalTimeout: (String verificationId) {
         actualCode = verificationId;
-        completer.complete('timeout');
+        //completer.complete('timeout');
       },
     );
   }
@@ -154,24 +163,38 @@ abstract class LoginStoreBase with Store {
       debugPrint('firebaseUser!.uid: ${firebaseUser!.uid}');
       isShowLoading = true;
       isShowConfetti = false;
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(
-              builder: (_) => const EntryPoint(widget: HomeScreen())),
-          (route) => false);
-    } else {
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (_) => const RegisterScreen()),
-          (route) => false);
+
+      if (userModel != null) {
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+                builder: (_) => const EntryPoint(widget: HomeScreen())),
+            (route) => false);
+      } else {
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (_) => const RegisterScreen()),
+            (route) => false);
+      }
     }
     isloginLoading = false;
     isOtpLoading = false;
   }
 
   @action
+  Future<UserModel> registerUser({required UserModel userModel}) async {
+    final response = await http.post(Uri.parse('$uri/v1/customer'),
+        headers: <String, String>{}, body: jsonEncode(userModel));
+
+    debugPrint(response.body);
+    isRegisterLoading = false;
+
+    return userModel;
+  }
+
+  @action
   Future<void> signOut(BuildContext context) async {
     await _auth.signOut();
-    //TODO redirect to login page
-
+    userModel = null;
     firebaseUser = null;
+    //TODO redirect to login page
   }
 }

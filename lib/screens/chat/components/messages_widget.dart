@@ -22,11 +22,11 @@ class _MessagesWidgetState extends State<MessagesWidget> {
     Size size = MediaQuery.of(context).size;
     List<MessageModel> messageCopy = [];
     for (var message in messages) {
-      if (message.getIdTo == widget.peerUser.getUserId &&
-          message.getIdFrom == widget.currentUser.getUserId) {
+      if (message.getIdTo == widget.peerUser.uid &&
+          message.getIdFrom == widget.currentUser.uid) {
         messageCopy.add(message);
-      } else if (message.getIdTo == widget.currentUser.getUserId &&
-          message.getIdFrom == widget.peerUser.getUserId) {
+      } else if (message.getIdTo == widget.currentUser.uid &&
+          message.getIdFrom == widget.peerUser.uid) {
         messageCopy.add(message);
       }
     }

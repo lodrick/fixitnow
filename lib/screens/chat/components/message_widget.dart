@@ -22,14 +22,14 @@ class MessageWidget extends StatelessWidget {
     final radius = Radius.circular(12.0.r);
     final borderRadius = BorderRadius.all(radius);
     return Row(
-      mainAxisAlignment: message.getIdFrom == currentUser.getUserId
+      mainAxisAlignment: message.getIdFrom == currentUser.uid
           ? MainAxisAlignment.end
           : MainAxisAlignment.start,
       children: <Widget>[
-        currentUser.getUserId != message.getIdFrom
+        currentUser.uid != message.getIdFrom
             ? CircleAvatar(
                 radius: 16.r,
-                backgroundImage: NetworkImage(peerUser.getPhotoUrl),
+                backgroundImage: NetworkImage(peerUser.photoUrl),
               )
             : const SizedBox.shrink(),
         message.getType == 0
@@ -44,28 +44,28 @@ class MessageWidget extends StatelessWidget {
                 ),
                 constraints: BoxConstraints(maxWidth: 250.w),
                 decoration: BoxDecoration(
-                  color: currentUser.getUserId == message.getIdFrom
+                  color: currentUser.uid == message.getIdFrom
                       ? CustomColor.primaryColors
                       : CustomColor.primaryColorLight,
-                  borderRadius: currentUser.getUserId == message.getIdFrom
+                  borderRadius: currentUser.uid == message.getIdFrom
                       ? borderRadius
                           .subtract(BorderRadius.only(bottomRight: radius))
                       : borderRadius
                           .subtract(BorderRadius.only(bottomLeft: radius)),
                 ),
                 child: Column(
-                  crossAxisAlignment: currentUser.getUserId != message.getIdFrom
+                  crossAxisAlignment: currentUser.uid != message.getIdFrom
                       ? CrossAxisAlignment.end
                       : CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
                       message.getText,
                       style: TextStyle(
-                        color: currentUser.getUserId == message.getIdFrom
+                        color: currentUser.uid == message.getIdFrom
                             ? Colors.white
                             : Colors.black54,
                       ),
-                      textAlign: currentUser.getUserId == message.getIdFrom
+                      textAlign: currentUser.uid == message.getIdFrom
                           ? TextAlign.end
                           : TextAlign.start,
                     ),
@@ -83,10 +83,10 @@ class MessageWidget extends StatelessWidget {
                 ),
                 constraints: BoxConstraints(maxWidth: 250.w),
                 decoration: BoxDecoration(
-                  color: currentUser.getUserId == message.getIdFrom
+                  color: currentUser.uid == message.getIdFrom
                       ? CustomColor.primaryColorLight
                       : CustomColor.primaryColors,
-                  borderRadius: currentUser.getUserId == message.getIdFrom
+                  borderRadius: currentUser.uid == message.getIdFrom
                       ? borderRadius
                           .subtract(BorderRadius.only(bottomRight: radius))
                       : borderRadius

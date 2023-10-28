@@ -1,8 +1,18 @@
+import 'dart:convert';
+
+import 'package:fixitnow/models/role_model.dart';
+import 'package:fixitnow/models/user_model.dart';
 import 'package:fixitnow/screens/entryPoint/entry_point.dart';
 import 'package:fixitnow/screens/home/home_screen.dart';
+import 'package:fixitnow/screens/loader_hub.dart';
+import 'package:fixitnow/stores/login/login_store.dart';
 import 'package:fixitnow/utils/custom_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -13,6 +23,37 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   DateTime backPressedTime = DateTime.now();
+  bool isChecked = false;
+  final String uri = 'http://10.0.0.107:9090/api';
+  Set<RoleModel> _roles = {};
+
+  Future<Set<RoleModel>> retrieveRoles() async {
+    Set<RoleModel> roles = {};
+    try {
+      final response = await http
+          .get(Uri.parse('$uri/v1/roles'), headers: <String, String>{});
+
+      Iterable iterable = jsonDecode(response.body)['object'] as Iterable;
+      roles = Set<RoleModel>.from(
+        iterable.map(
+          (model) => RoleModel.fromJson(model),
+        ),
+      );
+    } on Exception catch (e) {
+      debugPrint(e.toString());
+    }
+    return roles;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    retrieveRoles().then((value) {
+      setState(() {
+        _roles = value;
+      });
+    });
+  }
 
   Widget inputTextField(
       {required IconData iconData,
@@ -61,35 +102,107 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final screenHeight = MediaQuery.of(context).size.height;
     return WillPopScope(
       onWillPop: () => _onBackButtonBoubleClicked(context),
-      child: Scaffold(
-        backgroundColor: const Color.fromARGB(255, 243, 243, 243),
-        extendBody: true,
-        body: SafeArea(
-          child: CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                expandedHeight: screenHeight * .25,
-                //backgroundColor: const Color.fromARGB(255, 243, 243, 243),
-                floating: true,
-                pinned: true,
-                leading: Container(
-                  alignment: Alignment.center,
-                  height: screenHeight * .25,
-                ),
-                flexibleSpace: FlexibleSpaceBar(
-                  background: Container(),
-                  collapseMode: CollapseMode.pin,
+      child: Consumer<LoginStore>(builder: (_, userStore, __) {
+        return Observer(
+          builder: (_) => LoaderHud(
+            inAsyncCall: userStore.isRegisterLoading,
+            child: Scaffold(
+              backgroundColor: const Color.fromARGB(255, 243, 243, 243),
+              extendBody: true,
+              body: SafeArea(
+                child: CustomScrollView(
+                  slivers: [
+                    SliverAppBar(
+                      expandedHeight: screenHeight * .25,
+                      //backgroundColor: const Color.fromARGB(255, 243, 243, 243),
+                      floating: true,
+                      pinned: true,
+                      leading: Container(
+                        alignment: Alignment.center,
+                        height: screenHeight * .25,
+                      ),
+                      flexibleSpace: FlexibleSpaceBar(
+                        background: Container(),
+                        collapseMode: CollapseMode.pin,
+                      ),
+                    ),
+                    buildRegisterPane(context, userStore),
+                  ],
                 ),
               ),
-              buildRegisterPane(context),
-            ],
+              bottomNavigationBar:
+                  buildBottomSignup(context: context, userStore: userStore),
+            ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 
-  Widget buildRegisterPane(BuildContext context) => SliverToBoxAdapter(
+  Widget buildBottomSignup(
+          {required BuildContext context, required LoginStore userStore}) =>
+      Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
+        child: ElevatedButton.icon(
+          onPressed: () {
+            debugPrint('_roles:< $_roles');
+            Set<RoleModel> roleset = {};
+
+            for (var element in _roles) {
+              if (element.rid == 2) {
+                roleset.add(element);
+              } else if (isChecked && element.rid == 3) {
+                roleset.add(element);
+              }
+            }
+            debugPrint('roleset:< $roleset');
+
+            /*UserModel userModel = UserModel.copy(
+                      '_authId',
+                      '_name',
+                      '_surname',
+                      '_about',
+                      '_email',
+                      '_photoUrl',
+                      '_phoneNumber',
+                      setRole,
+                    );*/
+            Future.delayed(const Duration(seconds: 1), () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const EntryPoint(widget: HomeScreen()),
+                ),
+              );
+            });
+            //userStore.registerUser(userModel: userModel);
+            roleset = {};
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: CustomColor.primaryColors,
+            minimumSize: const Size(double.infinity, 56),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10.r),
+                topRight: Radius.circular(30.r),
+                bottomLeft: Radius.circular(30.r),
+                bottomRight: Radius.circular(30.r),
+              ),
+            ),
+          ),
+          icon: const Icon(
+            CupertinoIcons.arrow_right,
+            color: Colors.white,
+          ),
+          label: const Text(
+            'Sign Up',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      );
+
+  Widget buildRegisterPane(BuildContext context, LoginStore userStore) =>
+      SliverToBoxAdapter(
         child: Container(
           padding: EdgeInsets.symmetric(
             vertical: MediaQuery.of(context).size.height * .03,
@@ -110,42 +223,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   hintText: 'Please enter your email',
                   iconData: Icons.email_outlined,
                   context: context),
-              Padding(
-                padding: const EdgeInsets.only(top: 8, bottom: 24),
-                child: ElevatedButton.icon(
-                  onPressed: () {
-                    Future.delayed(const Duration(seconds: 1), () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              const EntryPoint(widget: HomeScreen()),
-                        ),
-                      );
-                    });
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: CustomColor.primaryColors,
-                    minimumSize: const Size(double.infinity, 56),
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        topRight: Radius.circular(25),
-                        bottomLeft: Radius.circular(25),
-                        bottomRight: Radius.circular(25),
-                      ),
-                    ),
-                  ),
-                  icon: const Icon(
-                    CupertinoIcons.arrow_right,
-                    color: Colors.white,
-                  ),
-                  label: const Text(
-                    'Sign Up',
-                    style: TextStyle(color: Colors.white),
+              CheckboxListTile(
+                visualDensity: VisualDensity.compact,
+                title: const Text(
+                  'I want to be a service provider',
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontFamily: "verdana_regular",
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
-              )
+                subtitle: const Text(
+                  'Please check this box',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontFamily: "verdana_regular",
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                checkColor: Colors.white,
+                shape: const CircleBorder(),
+                value: isChecked,
+                controlAffinity: ListTileControlAffinity.leading,
+                onChanged: (bool? value) {
+                  setState(() {
+                    isChecked = value!;
+                  });
+                },
+              ),
             ],
           ),
         ),

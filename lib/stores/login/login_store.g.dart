@@ -89,6 +89,22 @@ mixin _$LoginStore on LoginStoreBase, Store {
     });
   }
 
+  late final _$isRegisterLoadingAtom =
+      Atom(name: 'LoginStoreBase.isRegisterLoading', context: context);
+
+  @override
+  bool get isRegisterLoading {
+    _$isRegisterLoadingAtom.reportRead();
+    return super.isRegisterLoading;
+  }
+
+  @override
+  set isRegisterLoading(bool value) {
+    _$isRegisterLoadingAtom.reportWrite(value, super.isRegisterLoading, () {
+      super.isRegisterLoading = value;
+    });
+  }
+
   late final _$loginScaffoldKeyAtom =
       Atom(name: 'LoginStoreBase.loginScaffoldKey', context: context);
 
@@ -137,6 +153,22 @@ mixin _$LoginStore on LoginStoreBase, Store {
     });
   }
 
+  late final _$userModelAtom =
+      Atom(name: 'LoginStoreBase.userModel', context: context);
+
+  @override
+  UserModel? get userModel {
+    _$userModelAtom.reportRead();
+    return super.userModel;
+  }
+
+  @override
+  set userModel(UserModel? value) {
+    _$userModelAtom.reportWrite(value, super.userModel, () {
+      super.userModel = value;
+    });
+  }
+
   late final _$isAlreadyAuthenticatedAsyncAction =
       AsyncAction('LoginStoreBase.isAlreadyAuthenticated', context: context);
 
@@ -165,6 +197,15 @@ mixin _$LoginStore on LoginStoreBase, Store {
         .run(() => super.validateOtpAndLogin(context, smsCode));
   }
 
+  late final _$registerUserAsyncAction =
+      AsyncAction('LoginStoreBase.registerUser', context: context);
+
+  @override
+  Future<UserModel> registerUser({required UserModel userModel}) {
+    return _$registerUserAsyncAction
+        .run(() => super.registerUser(userModel: userModel));
+  }
+
   late final _$signOutAsyncAction =
       AsyncAction('LoginStoreBase.signOut', context: context);
 
@@ -181,9 +222,11 @@ isOtpLoading: ${isOtpLoading},
 isShowPasscode: ${isShowPasscode},
 isShowLoading: ${isShowLoading},
 isShowConfetti: ${isShowConfetti},
+isRegisterLoading: ${isRegisterLoading},
 loginScaffoldKey: ${loginScaffoldKey},
 otpScaffoldKey: ${otpScaffoldKey},
-firebaseUser: ${firebaseUser}
+firebaseUser: ${firebaseUser},
+userModel: ${userModel}
     ''';
   }
 }

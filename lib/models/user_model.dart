@@ -1,105 +1,54 @@
 import 'package:fixitnow/models/role_model.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'user_model.g.dart';
+
+@JsonSerializable(includeIfNull: false)
 class UserModel {
-  int? _userId;
-  String _name;
-  String _surname;
-  String _about;
-  String _email;
-  String _photoUrl;
-  String _phoneNumber;
-  final Set<RoleModel> _roleModels;
+  int? uid;
+  final String authId;
+  final String name;
+  final String surname;
+  final String about;
+  final String email;
+  final String photoUrl;
+  final String phoneNumber;
+  final Set<RoleModel> roleModels;
 
   UserModel(
-    this._userId,
-    this._name,
-    this._surname,
-    this._about,
-    this._email,
-    this._photoUrl,
-    this._phoneNumber,
-    this._roleModels,
+    this.uid,
+    this.authId,
+    this.name,
+    this.surname,
+    this.about,
+    this.email,
+    this.photoUrl,
+    this.phoneNumber,
+    this.roleModels,
   );
 
   UserModel.copy(
-    this._name,
-    this._surname,
-    this._about,
-    this._email,
-    this._photoUrl,
-    this._phoneNumber,
-    this._roleModels,
+    this.authId,
+    this.name,
+    this.surname,
+    this.about,
+    this.email,
+    this.photoUrl,
+    this.phoneNumber,
+    this.roleModels,
   );
 
-  set setUserId(int userId) {
-    _userId = userId;
-  }
+  factory UserModel.fromJson(Map<String, dynamic> json) =>
+      _$UserModelFromJson(json);
 
-  int? get getUserId {
-    return _userId;
-  }
-
-  set setName(String name) {
-    _name = name;
-  }
-
-  String get getName {
-    return _name;
-  }
-
-  set setSurname(String surname) {
-    _surname = surname;
-  }
-
-  String get getSurname {
-    return _surname;
-  }
-
-  set setAbout(String about) {
-    _about = about;
-  }
-
-  String get getAbout {
-    return _about;
-  }
-
-  set setEmail(String email) {
-    _email = email;
-  }
-
-  String get getEmail {
-    return _email;
-  }
-
-  set setPhotoUrl(String photoUrl) {
-    _photoUrl = photoUrl;
-  }
-
-  String get getPhotoUrl {
-    return _photoUrl;
-  }
-
-  set setPhoneNumber(String phoneNumber) {
-    _phoneNumber = phoneNumber;
-  }
-
-  String get getPhoneNumber {
-    return _phoneNumber;
-  }
-
-  Set<RoleModel> get getRoleModels {
-    return _roleModels;
-  }
-
-  set setRoleModels(Set<RoleModel> roleModels) {
-    roleModels = roleModels;
-  }
+  Map<String, dynamic> toJson() => _$UserModelToJson(this);
 }
 
 Set<RoleModel> setRole = {};
 List<UserModel> users = [
   UserModel(
       2,
+      'sdfsdfsdfsdfsdfsdf',
       'Sindile',
       'Moyan',
       'Certified Personal Trainer and Nutritionist with years of experience in creating effective diets and training plans focused on achieving individual customers goals in a smooth way.',
@@ -109,6 +58,7 @@ List<UserModel> users = [
       setRole),
   UserModel(
       3,
+      'sdfsdfsdfsdfsdfsdf',
       'Alwande',
       'Mpanze',
       '_about',
@@ -118,6 +68,7 @@ List<UserModel> users = [
       setRole),
   UserModel(
       4,
+      'sdfsdfsdfsdfsdfsdf',
       'Dave',
       'Sisty',
       '_about',
