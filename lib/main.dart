@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fixitnow/screens/onboarding/onboarding_screen.dart';
-import 'package:fixitnow/stores/login_store.dart';
+import 'package:fixitnow/stores/login/login_store.dart';
 import 'package:fixitnow/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

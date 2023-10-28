@@ -1,5 +1,5 @@
 import 'package:fixitnow/screens/loader_hub.dart';
-import 'package:fixitnow/stores/login_store.dart';
+import 'package:fixitnow/stores/login/login_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
