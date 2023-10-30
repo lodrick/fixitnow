@@ -8,14 +8,14 @@ part of 'user_model.dart';
 
 UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       json['uid'] as int?,
-      json['authId'] as String,
-      json['name'] as String,
-      json['surname'] as String,
-      json['about'] as String,
-      json['email'] as String,
+      json['authUid'] as String,
+      json['firstName'] as String,
+      json['lastName'] as String,
+      json['about'] as String?,
+      json['email'] as String?,
       json['photoUrl'] as String,
       json['phoneNumber'] as String,
-      (json['roleModels'] as List<dynamic>)
+      (json['roles'] as List<dynamic>)
           .map((e) => RoleModel.fromJson(e as Map<String, dynamic>))
           .toSet(),
     );
@@ -30,13 +30,13 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) {
   }
 
   writeNotNull('uid', instance.uid);
-  val['authId'] = instance.authId;
-  val['name'] = instance.name;
-  val['surname'] = instance.surname;
-  val['about'] = instance.about;
-  val['email'] = instance.email;
+  val['authUid'] = instance.authUid;
+  val['firstName'] = instance.firstName;
+  val['lastName'] = instance.lastName;
+  writeNotNull('about', instance.about);
+  writeNotNull('email', instance.email);
   val['photoUrl'] = instance.photoUrl;
   val['phoneNumber'] = instance.phoneNumber;
-  val['roleModels'] = instance.roleModels.toList();
+  val['roles'] = instance.roles.toList();
   return val;
 }

@@ -32,7 +32,7 @@ class _PeerChatScreenState extends State<PeerChatScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             ProfileHeaderWidget(
-              name: '${widget.peerUser.name} ${widget.peerUser.surname}',
+              name: '${widget.peerUser.firstName} ${widget.peerUser.lastName}',
               imageUrl: widget.peerUser.photoUrl,
               size: size,
             ),

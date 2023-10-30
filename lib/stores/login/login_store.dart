@@ -29,7 +29,7 @@ abstract class LoginStoreBase with Store {
   @observable
   bool isShowConfetti = false;
   @observable
-  bool isRegisterLoading = false;
+  bool isUserLoading = false;
 
   @observable
   GlobalKey<ScaffoldMessengerState> loginScaffoldKey =
@@ -43,7 +43,7 @@ abstract class LoginStoreBase with Store {
   User? firebaseUser;
 
   @observable
-  UserModel? userModel;
+  UserModel? currentUser;
 
   @action
   Future<bool> isAlreadyAuthenticated() async {
@@ -164,14 +164,24 @@ abstract class LoginStoreBase with Store {
       isShowLoading = true;
       isShowConfetti = false;
 
-      if (userModel != null) {
+      await retriveUser(firebaseUser!.uid);
+
+      debugPrint('currentUser: $currentUser');
+
+      if (currentUser != null) {
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
-                builder: (_) => const EntryPoint(widget: HomeScreen())),
+              builder: (_) => const EntryPoint(widget: HomeScreen()),
+            ),
             (route) => false);
       } else {
         Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (_) => const RegisterScreen()),
+            MaterialPageRoute(
+              builder: (_) => RegisterScreen(
+                phoneNumber: firebaseUser!.phoneNumber!,
+                authId: firebaseUser!.uid,
+              ),
+            ),
             (route) => false);
       }
     }
@@ -180,20 +190,41 @@ abstract class LoginStoreBase with Store {
   }
 
   @action
-  Future<UserModel> registerUser({required UserModel userModel}) async {
-    final response = await http.post(Uri.parse('$uri/v1/customer'),
-        headers: <String, String>{}, body: jsonEncode(userModel));
+  Future<void> registerUser({required UserModel user}) async {
+    try {
+      debugPrint('Request Body: ${user.toJson()}');
+      final response = await http.post(Uri.parse('$uri/v1/customer'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(user));
 
-    debugPrint(response.body);
-    isRegisterLoading = false;
+      final json = jsonDecode(response.body)['object'] as Map<String, dynamic>;
+      currentUser = UserModel.fromJson(json);
+      isUserLoading = true;
+    } on Exception catch (e) {
+      debugPrint(e.toString());
+    }
+  }
 
-    return userModel;
+  Future<void> retriveUser(String authUid) async {
+    try {
+      final response = await http.get(Uri.parse('$uri/v1/customerss/$authUid'),
+          headers: <String, String>{});
+      final json = jsonDecode(response.body)['object'] as Map<String, dynamic>;
+      //isUserLoading = true;
+      debugPrint('currentUser: >/ ${currentUser.toString()}');
+      currentUser = UserModel.fromJson(json);
+      isUserLoading = true;
+    } on Exception catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   @action
   Future<void> signOut(BuildContext context) async {
     await _auth.signOut();
-    userModel = null;
+    currentUser = null;
     firebaseUser = null;
     //TODO redirect to login page
   }

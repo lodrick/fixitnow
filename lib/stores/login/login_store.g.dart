@@ -89,19 +89,19 @@ mixin _$LoginStore on LoginStoreBase, Store {
     });
   }
 
-  late final _$isRegisterLoadingAtom =
-      Atom(name: 'LoginStoreBase.isRegisterLoading', context: context);
+  late final _$isUserLoadingAtom =
+      Atom(name: 'LoginStoreBase.isUserLoading', context: context);
 
   @override
-  bool get isRegisterLoading {
-    _$isRegisterLoadingAtom.reportRead();
-    return super.isRegisterLoading;
+  bool get isUserLoading {
+    _$isUserLoadingAtom.reportRead();
+    return super.isUserLoading;
   }
 
   @override
-  set isRegisterLoading(bool value) {
-    _$isRegisterLoadingAtom.reportWrite(value, super.isRegisterLoading, () {
-      super.isRegisterLoading = value;
+  set isUserLoading(bool value) {
+    _$isUserLoadingAtom.reportWrite(value, super.isUserLoading, () {
+      super.isUserLoading = value;
     });
   }
 
@@ -153,19 +153,19 @@ mixin _$LoginStore on LoginStoreBase, Store {
     });
   }
 
-  late final _$userModelAtom =
-      Atom(name: 'LoginStoreBase.userModel', context: context);
+  late final _$currentUserAtom =
+      Atom(name: 'LoginStoreBase.currentUser', context: context);
 
   @override
-  UserModel? get userModel {
-    _$userModelAtom.reportRead();
-    return super.userModel;
+  UserModel? get currentUser {
+    _$currentUserAtom.reportRead();
+    return super.currentUser;
   }
 
   @override
-  set userModel(UserModel? value) {
-    _$userModelAtom.reportWrite(value, super.userModel, () {
-      super.userModel = value;
+  set currentUser(UserModel? value) {
+    _$currentUserAtom.reportWrite(value, super.currentUser, () {
+      super.currentUser = value;
     });
   }
 
@@ -201,9 +201,8 @@ mixin _$LoginStore on LoginStoreBase, Store {
       AsyncAction('LoginStoreBase.registerUser', context: context);
 
   @override
-  Future<UserModel> registerUser({required UserModel userModel}) {
-    return _$registerUserAsyncAction
-        .run(() => super.registerUser(userModel: userModel));
+  Future<void> registerUser({required UserModel user}) {
+    return _$registerUserAsyncAction.run(() => super.registerUser(user: user));
   }
 
   late final _$signOutAsyncAction =
@@ -222,11 +221,11 @@ isOtpLoading: ${isOtpLoading},
 isShowPasscode: ${isShowPasscode},
 isShowLoading: ${isShowLoading},
 isShowConfetti: ${isShowConfetti},
-isRegisterLoading: ${isRegisterLoading},
+isUserLoading: ${isUserLoading},
 loginScaffoldKey: ${loginScaffoldKey},
 otpScaffoldKey: ${otpScaffoldKey},
 firebaseUser: ${firebaseUser},
-userModel: ${userModel}
+currentUser: ${currentUser}
     ''';
   }
 }

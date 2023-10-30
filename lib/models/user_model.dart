@@ -6,37 +6,37 @@ part 'user_model.g.dart';
 @JsonSerializable(includeIfNull: false)
 class UserModel {
   int? uid;
-  final String authId;
-  final String name;
-  final String surname;
-  final String about;
-  final String email;
+  final String authUid;
+  final String firstName;
+  final String lastName;
+  String? about;
+  String? email;
   final String photoUrl;
   final String phoneNumber;
-  final Set<RoleModel> roleModels;
+  final Set<RoleModel> roles;
 
   UserModel(
     this.uid,
-    this.authId,
-    this.name,
-    this.surname,
+    this.authUid,
+    this.firstName,
+    this.lastName,
     this.about,
     this.email,
     this.photoUrl,
     this.phoneNumber,
-    this.roleModels,
+    this.roles,
   );
 
-  UserModel.copy(
-    this.authId,
-    this.name,
-    this.surname,
+  UserModel.copy({
+    required this.authUid,
+    required this.firstName,
+    required this.lastName,
     this.about,
     this.email,
-    this.photoUrl,
-    this.phoneNumber,
-    this.roleModels,
-  );
+    required this.photoUrl,
+    required this.phoneNumber,
+    required this.roles,
+  });
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>
       _$UserModelFromJson(json);

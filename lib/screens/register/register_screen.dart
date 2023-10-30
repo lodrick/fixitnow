@@ -15,7 +15,13 @@ import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
 class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+  const RegisterScreen({
+    super.key,
+    required this.authId,
+    required this.phoneNumber,
+  });
+  final String authId;
+  final String phoneNumber;
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -26,6 +32,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool isChecked = false;
   final String uri = 'http://10.0.0.107:9090/api';
   Set<RoleModel> _roles = {};
+
+  final TextEditingController _controllerFirstName = TextEditingController();
+  final TextEditingController _controllerLastName = TextEditingController();
+  final TextEditingController _controllerEmail = TextEditingController();
+  final TextEditingController _controllerAbout = TextEditingController();
 
   Future<Set<RoleModel>> retrieveRoles() async {
     Set<RoleModel> roles = {};
@@ -55,15 +66,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
     });
   }
 
-  Widget inputTextField(
-      {required IconData iconData,
-      required String hintText,
-      required BuildContext context}) {
+  Widget inputTextField({
+    required IconData iconData,
+    required String hintText,
+    required BuildContext context,
+    required TextEditingController controller,
+    required int maxLines,
+  }) {
     return Padding(
       padding: EdgeInsets.symmetric(
         vertical: MediaQuery.of(context).size.height * .008,
       ),
       child: TextFormField(
+        maxLines: maxLines,
+        controller: controller,
         decoration: InputDecoration(
           filled: true,
           focusColor: Colors.white,
@@ -105,7 +121,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       child: Consumer<LoginStore>(builder: (_, userStore, __) {
         return Observer(
           builder: (_) => LoaderHud(
-            inAsyncCall: userStore.isRegisterLoading,
+            inAsyncCall: userStore.isloginLoading,
             child: Scaffold(
               backgroundColor: const Color.fromARGB(255, 243, 243, 243),
               extendBody: true,
@@ -155,27 +171,35 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 roleset.add(element);
               }
             }
-            debugPrint('roleset:< $roleset');
+            debugPrint('authId:< ${widget.authId}');
+            debugPrint('phoneNumber:< ${widget.phoneNumber}');
 
-            /*UserModel userModel = UserModel.copy(
-                      '_authId',
-                      '_name',
-                      '_surname',
-                      '_about',
-                      '_email',
-                      '_photoUrl',
-                      '_phoneNumber',
-                      setRole,
-                    );*/
-            Future.delayed(const Duration(seconds: 1), () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const EntryPoint(widget: HomeScreen()),
-                ),
-              );
-            });
-            //userStore.registerUser(userModel: userModel);
+            UserModel userModel = UserModel.copy(
+              firstName: _controllerFirstName.text,
+              lastName: _controllerLastName.text,
+              about: _controllerAbout.text,
+              email: _controllerEmail.text,
+              authUid: widget.authId,
+              phoneNumber: widget.phoneNumber,
+              photoUrl:
+                  'https://cdn4.iconfinder.com/data/icons/basic-interface-overcolor/512/user-512.png',
+              roles: roleset,
+            );
+
+            userStore.registerUser(user: userModel);
+
+            if (userStore.isUserLoading) {
+              Future.delayed(const Duration(seconds: 2), () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        const EntryPoint(widget: HomeScreen()),
+                  ),
+                );
+              });
+            }
+
             roleset = {};
           },
           style: ElevatedButton.styleFrom(
@@ -212,17 +236,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               inputTextField(
-                  hintText: 'Please enter your name',
-                  iconData: Icons.person_2_rounded,
-                  context: context),
+                hintText: 'Please enter your name',
+                iconData: Icons.person_2_rounded,
+                context: context,
+                controller: _controllerFirstName,
+                maxLines: 1,
+              ),
               inputTextField(
                   hintText: 'Please enter your surname',
                   iconData: Icons.people_alt_rounded,
-                  context: context),
+                  context: context,
+                  controller: _controllerLastName,
+                  maxLines: 1),
               inputTextField(
-                  hintText: 'Please enter your email',
-                  iconData: Icons.email_outlined,
-                  context: context),
+                hintText: 'Please enter your email',
+                iconData: Icons.email_outlined,
+                context: context,
+                controller: _controllerEmail,
+                maxLines: 1,
+              ),
               CheckboxListTile(
                 visualDensity: VisualDensity.compact,
                 title: const Text(
@@ -251,6 +283,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   });
                 },
               ),
+              isChecked
+                  ? inputTextField(
+                      hintText: 'Say something about your work',
+                      iconData: Icons.email_outlined,
+                      context: context,
+                      controller: _controllerAbout,
+                      maxLines: 4,
+                    )
+                  : const SizedBox.shrink(),
             ],
           ),
         ),
@@ -272,42 +313,3 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return false;
   }
 }
-/*
-Column(
-          children: [
-            const Text(
-              "Sign in",
-              style: TextStyle(
-                fontSize: 34,
-                fontFamily: "Poppins",
-                fontWeight: FontWeight.w600,
-                color: Color.fromARGB(255, 45, 61, 46),
-              ),
-            ),
-            const Text(
-              "Create your new account, we are glad that you joined us.",
-              overflow: TextOverflow.visible,
-              maxLines: 5,
-              softWrap: true,
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
-                fontWeight: FontWeight.w400,
-              ),
-              textAlign: TextAlign.start,
-            ),
-            inputTextField(
-                hintText: 'Please enter your name',
-                iconData: Icons.person_2_outlined),
-            inputTextField(
-                hintText: 'Please enter your surname',
-                iconData: Icons.person_2_outlined),
-            inputTextField(
-                hintText: 'please enter your email',
-                iconData: Icons.person_2_outlined),
-            inputTextField(
-                hintText: 'Please enter your status',
-                iconData: Icons.person_2_outlined),
-          ],
-        ),
-*/

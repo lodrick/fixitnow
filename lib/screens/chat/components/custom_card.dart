@@ -22,13 +22,13 @@ class CustomCard extends StatelessWidget {
                   'https://cdn4.iconfinder.com/data/icons/basic-interface-overcolor/512/user-512.png'),
             ),
             title: Text(
-              '${userModel.name} ${userModel.surname}',
+              '${userModel.firstName} ${userModel.lastName}',
               style: TextStyle(
                 fontSize: 16.sp,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            subtitle: Text(userModel.email),
+            subtitle: Text(userModel.email!),
             /*const Row(
               children: <Widget>[
                 Icon(Icons.done_all),
