@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class InfoCard extends StatelessWidget {
   const InfoCard({
@@ -22,11 +23,15 @@ class InfoCard extends StatelessWidget {
       ),
       title: Text(
         name,
-        style: const TextStyle(color: Colors.white),
+        style: TextStyle(color: Colors.white, fontSize: 12.sp),
       ),
       subtitle: Text(
         bio,
-        style: const TextStyle(color: Colors.white70),
+        style: TextStyle(
+          color: Colors.white70,
+          fontSize: 13.sp,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }

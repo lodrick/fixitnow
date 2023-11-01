@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fixitnow/models/user_model.dart';
 import 'package:fixitnow/screens/entryPoint/entry_point.dart';
 import 'package:fixitnow/screens/home/home_screen.dart';
+import 'package:fixitnow/screens/onboarding/onboarding_screen.dart';
 import 'package:fixitnow/screens/register/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
@@ -28,8 +29,6 @@ abstract class LoginStoreBase with Store {
   bool isShowLoading = false;
   @observable
   bool isShowConfetti = false;
-  @observable
-  bool isUserLoading = false;
 
   @observable
   GlobalKey<ScaffoldMessengerState> loginScaffoldKey =
@@ -162,35 +161,39 @@ abstract class LoginStoreBase with Store {
     if (firebaseUser!.phoneNumber!.isNotEmpty) {
       debugPrint('firebaseUser!.uid: ${firebaseUser!.uid}');
       isShowLoading = true;
-      isShowConfetti = false;
+      isShowConfetti = true;
 
-      await retriveUser(firebaseUser!.uid);
+      retriveUser(firebaseUser!.uid).then((value) {
+        currentUser = value;
+        Future.delayed(const Duration(seconds: 5));
 
-      debugPrint('currentUser: $currentUser');
-
-      if (currentUser != null) {
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(
-              builder: (_) => const EntryPoint(widget: HomeScreen()),
-            ),
-            (route) => false);
-      } else {
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(
-              builder: (_) => RegisterScreen(
-                phoneNumber: firebaseUser!.phoneNumber!,
-                authId: firebaseUser!.uid,
+        if (currentUser != null) {
+          debugPrint('values ${value!.toJson()}');
+          Future.delayed(const Duration(seconds: 5));
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                builder: (_) => const EntryPoint(widget: HomeScreen()),
               ),
-            ),
-            (route) => false);
-      }
+              (route) => false);
+        } else {
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                builder: (_) => RegisterScreen(
+                  phoneNumber: firebaseUser!.phoneNumber!,
+                  authId: firebaseUser!.uid,
+                ),
+              ),
+              (route) => false);
+        }
+      });
     }
     isloginLoading = false;
     isOtpLoading = false;
   }
 
   @action
-  Future<void> registerUser({required UserModel user}) async {
+  Future<void> registerUser(
+      {required BuildContext context, required UserModel user}) async {
     try {
       debugPrint('Request Body: ${user.toJson()}');
       final response = await http.post(Uri.parse('$uri/v1/customer'),
@@ -201,31 +204,48 @@ abstract class LoginStoreBase with Store {
 
       final json = jsonDecode(response.body)['object'] as Map<String, dynamic>;
       currentUser = UserModel.fromJson(json);
-      isUserLoading = true;
-    } on Exception catch (e) {
-      debugPrint(e.toString());
-    }
-  }
-
-  Future<void> retriveUser(String authUid) async {
-    try {
-      final response = await http.get(Uri.parse('$uri/v1/customerss/$authUid'),
-          headers: <String, String>{});
-      final json = jsonDecode(response.body)['object'] as Map<String, dynamic>;
-      //isUserLoading = true;
-      debugPrint('currentUser: >/ ${currentUser.toString()}');
-      currentUser = UserModel.fromJson(json);
-      isUserLoading = true;
+      Future.delayed(const Duration(seconds: 2), () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const EntryPoint(widget: HomeScreen()),
+          ),
+        );
+      });
     } on Exception catch (e) {
       debugPrint(e.toString());
     }
   }
 
   @action
+  Future<UserModel?> retriveUser(String authUid) async {
+    try {
+      final response = await http.get(Uri.parse('$uri/v1/customerss/$authUid'),
+          headers: <String, String>{});
+      Map<String, dynamic> json = {};
+
+      if (response.body.isNotEmpty &&
+          jsonDecode(response.body)['status'] == 200) {
+        json = jsonDecode(response.body)['object'] as Map<String, dynamic>;
+        currentUser = UserModel.fromJson(json);
+        return UserModel.fromJson(json);
+      }
+    } on Exception catch (e) {
+      debugPrint('$e');
+    }
+    return null;
+  }
+
+  @action
   Future<void> signOut(BuildContext context) async {
+    Future.delayed(const Duration(seconds: 2), () {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (_) => const OnboardingScreen()),
+          (route) => false);
+    });
+
     await _auth.signOut();
     currentUser = null;
     firebaseUser = null;
-    //TODO redirect to login page
   }
 }

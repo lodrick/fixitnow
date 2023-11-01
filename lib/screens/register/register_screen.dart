@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:fixitnow/models/role_model.dart';
 import 'package:fixitnow/models/user_model.dart';
-import 'package:fixitnow/screens/entryPoint/entry_point.dart';
-import 'package:fixitnow/screens/home/home_screen.dart';
 import 'package:fixitnow/screens/loader_hub.dart';
 import 'package:fixitnow/stores/login/login_store.dart';
 import 'package:fixitnow/utils/custom_color.dart';
@@ -13,6 +11,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:rive/rive.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({
@@ -37,6 +36,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _controllerLastName = TextEditingController();
   final TextEditingController _controllerEmail = TextEditingController();
   final TextEditingController _controllerAbout = TextEditingController();
+
+  late SMITrigger error;
+  late SMITrigger success;
+  late SMITrigger reset;
+  late SMITrigger confetti;
+
+  void _onCheckRiveInit(Artboard artboard) {
+    StateMachineController? controller =
+        StateMachineController.fromArtboard(artboard, 'State Machine 1');
+
+    artboard.addController(controller!);
+    error = controller.findInput<bool>('Error') as SMITrigger;
+    success = controller.findInput<bool>('Check') as SMITrigger;
+    reset = controller.findInput<bool>('Reset') as SMITrigger;
+  }
 
   Future<Set<RoleModel>> retrieveRoles() async {
     Set<RoleModel> roles = {};
@@ -121,6 +135,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
       child: Consumer<LoginStore>(builder: (_, userStore, __) {
         return Observer(
           builder: (_) => LoaderHud(
+            loading: RiveAnimation.asset(
+              'assets/RiveAssets/check.riv',
+              fit: BoxFit.cover,
+              onInit: _onCheckRiveInit,
+            ),
             inAsyncCall: userStore.isloginLoading,
             child: Scaffold(
               backgroundColor: const Color.fromARGB(255, 243, 243, 243),
@@ -175,30 +194,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
             debugPrint('phoneNumber:< ${widget.phoneNumber}');
 
             UserModel userModel = UserModel.copy(
-              firstName: _controllerFirstName.text,
-              lastName: _controllerLastName.text,
-              about: _controllerAbout.text,
-              email: _controllerEmail.text,
-              authUid: widget.authId,
-              phoneNumber: widget.phoneNumber,
+              firstName: _controllerFirstName.text.trim(),
+              lastName: _controllerLastName.text.trim(),
+              about: _controllerAbout.text.trim(),
+              email: _controllerEmail.text.trim(),
+              authUid: widget.authId.trim(),
+              phoneNumber: widget.phoneNumber.trim(),
               photoUrl:
                   'https://cdn4.iconfinder.com/data/icons/basic-interface-overcolor/512/user-512.png',
               roles: roleset,
             );
 
-            userStore.registerUser(user: userModel);
-
-            if (userStore.isUserLoading) {
-              Future.delayed(const Duration(seconds: 2), () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        const EntryPoint(widget: HomeScreen()),
-                  ),
-                );
-              });
-            }
+            userStore.registerUser(context: context, user: userModel);
 
             roleset = {};
           },

@@ -89,22 +89,6 @@ mixin _$LoginStore on LoginStoreBase, Store {
     });
   }
 
-  late final _$isUserLoadingAtom =
-      Atom(name: 'LoginStoreBase.isUserLoading', context: context);
-
-  @override
-  bool get isUserLoading {
-    _$isUserLoadingAtom.reportRead();
-    return super.isUserLoading;
-  }
-
-  @override
-  set isUserLoading(bool value) {
-    _$isUserLoadingAtom.reportWrite(value, super.isUserLoading, () {
-      super.isUserLoading = value;
-    });
-  }
-
   late final _$loginScaffoldKeyAtom =
       Atom(name: 'LoginStoreBase.loginScaffoldKey', context: context);
 
@@ -201,8 +185,18 @@ mixin _$LoginStore on LoginStoreBase, Store {
       AsyncAction('LoginStoreBase.registerUser', context: context);
 
   @override
-  Future<void> registerUser({required UserModel user}) {
-    return _$registerUserAsyncAction.run(() => super.registerUser(user: user));
+  Future<void> registerUser(
+      {required BuildContext context, required UserModel user}) {
+    return _$registerUserAsyncAction
+        .run(() => super.registerUser(context: context, user: user));
+  }
+
+  late final _$retriveUserAsyncAction =
+      AsyncAction('LoginStoreBase.retriveUser', context: context);
+
+  @override
+  Future<UserModel?> retriveUser(String authUid) {
+    return _$retriveUserAsyncAction.run(() => super.retriveUser(authUid));
   }
 
   late final _$signOutAsyncAction =
@@ -221,7 +215,6 @@ isOtpLoading: ${isOtpLoading},
 isShowPasscode: ${isShowPasscode},
 isShowLoading: ${isShowLoading},
 isShowConfetti: ${isShowConfetti},
-isUserLoading: ${isUserLoading},
 loginScaffoldKey: ${loginScaffoldKey},
 otpScaffoldKey: ${otpScaffoldKey},
 firebaseUser: ${firebaseUser},

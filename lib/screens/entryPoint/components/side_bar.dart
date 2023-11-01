@@ -24,7 +24,8 @@ class _SideBarState extends State<SideBar> {
     return Consumer<LoginStore>(builder: (_, userStore, __) {
       return Observer(
         builder: (_) => LoaderHud(
-          inAsyncCall: userStore.isUserLoading,
+          inAsyncCall: false,
+          loading: Container(),
           child: SafeArea(
             child: Container(
               width: 288,

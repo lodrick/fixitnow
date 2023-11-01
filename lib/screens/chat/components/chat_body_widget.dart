@@ -1,4 +1,3 @@
-import 'package:fixitnow/models/role_model.dart';
 import 'package:fixitnow/models/user_model.dart';
 import 'package:fixitnow/screens/chat/components/custom_card.dart';
 import 'package:fixitnow/screens/chat/components/search_user_chat.dart';
@@ -7,16 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChatBodyWidget extends StatelessWidget {
-  final List<UserModel> users;
-  //final UserModel currentUser = ;
-  final int currentUserId;
-  final Size size;
   const ChatBodyWidget({
     super.key,
     required this.users,
-    required this.currentUserId,
+    required this.currentUser,
     required this.size,
   });
+  final List<UserModel> users;
+  final UserModel currentUser;
+  final Size size;
 
   @override
   Widget build(BuildContext context) {
@@ -37,18 +35,6 @@ class ChatBodyWidget extends StatelessWidget {
   }
 
   Widget buildChats() {
-    Set<RoleModel> setRole = {};
-    UserModel currentUser = UserModel(
-        1,
-        'sdfsdfsdfsdfsdfsdf',
-        'Lodrick',
-        'Mpanze',
-        '_about',
-        'lodrick@gmail.com',
-        'https://cdn4.iconfinder.com/data/icons/basic-interface-overcolor/512/user-512.png',
-        '_phoneNumber',
-        setRole);
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,

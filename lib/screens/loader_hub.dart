@@ -1,27 +1,30 @@
-import 'package:fixitnow/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+//import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoaderHud extends StatelessWidget {
-  LoaderHud({
+  const LoaderHud({
     super.key,
     required this.inAsyncCall,
     this.opacity = 0.3,
-    this.color = Colors.grey,
+    this.color = Colors.transparent,
     this.dismissble = false,
     required this.child,
+    required this.loading,
   });
   final bool inAsyncCall;
   final double opacity;
   final Color color;
-  final Widget progressIndicator = Container(
+  final Widget loading;
+  /*final Widget progressIndicator = Container(
     width: 200.w,
     height: 200.h,
-    decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(8)),
-        color: CustomColor.primaryColors.withOpacity(.7)),
+    decoration: const BoxDecoration(
+      borderRadius: BorderRadius.all(Radius.circular(8)),
+      //color: CustomColor.primaryColors.withOpacity(.7)
+    ),
     child: const Center(child: CircularProgressIndicator()),
-  );
+  );*/
   final bool dismissble;
   final Widget child;
 
@@ -38,7 +41,13 @@ class LoaderHud extends StatelessWidget {
             color: color,
           ),
         ),
-        Center(child: progressIndicator),
+        Center(
+          child: SizedBox(
+            width: 150.w,
+            height: 150.h,
+            child: loading,
+          ),
+        ),
       ],
     );
   }

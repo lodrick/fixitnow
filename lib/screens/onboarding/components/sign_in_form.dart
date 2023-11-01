@@ -20,12 +20,10 @@ class _SignInFormState extends State<SignInForm> {
   final GlobalKey<FormState> _fromKey = GlobalKey<FormState>();
   late PhoneNumber _number = PhoneNumber(isoCode: 'ZA');
   final TextEditingController phoneController = TextEditingController();
-  //final TextEditingController _pinPutController = TextEditingController();
   //final FocusNode _pinPutNode = FocusNode();
   //bool isShowLoading = false;
   //bool isShowConfetti = false;
   late PhoneNumber _validPhoneNumber;
-  //final bool _isValidPhoneNumber = false;
   late SMITrigger error;
   late SMITrigger success;
   late SMITrigger reset;
@@ -102,6 +100,18 @@ class _SignInFormState extends State<SignInForm> {
       return Observer(
         builder: (_) => LoaderHud(
           inAsyncCall: loginStore.isOtpLoading,
+          loading: Stack(children: <Widget>[
+            RiveAnimation.asset(
+              'assets/RiveAssets/check.riv',
+              fit: BoxFit.cover,
+              onInit: _onCheckRiveInit,
+            ),
+            RiveAnimation.asset(
+              'assets/RiveAssets/confetti.riv',
+              fit: BoxFit.cover,
+              onInit: _onConfettiRiveInit,
+            ),
+          ]),
           child: Scaffold(
             key: loginStore.loginScaffoldKey,
             body: SingleChildScrollView(
@@ -214,7 +224,7 @@ class _SignInFormState extends State<SignInForm> {
                       ],
                     ),
                   ),
-                  loginStore.isShowLoading
+                  /*loginStore.isShowLoading
                       ? CustomPositioned(
                           child: RiveAnimation.asset(
                             'assets/RiveAssets/check.riv',
@@ -231,7 +241,7 @@ class _SignInFormState extends State<SignInForm> {
                             onInit: _onConfettiRiveInit,
                           ),
                         )
-                      : const SizedBox()
+                      : const SizedBox()*/
                 ],
               ),
             ),
