@@ -1,9 +1,7 @@
-import 'package:fixitnow/models/user_model.dart';
 import 'package:fixitnow/screens/chat/components/chat_body_widget.dart';
 import 'package:fixitnow/screens/chat/components/chat_header_widget.dart';
 import 'package:fixitnow/screens/loader_hub.dart';
 import 'package:fixitnow/stores/login/login_store.dart';
-import 'package:fixitnow/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -49,46 +47,23 @@ class _ChatScreenState extends State<ChatScreen> {
             onInit: _onCheckRiveInit,
           ),
           child: Scaffold(
-            body: SafeArea(
-              child: CustomScrollView(
-                slivers: [
-                  SliverAppBar(
-                    expandedHeight: size.height.h * 0.087,
-                    floating: true,
-                    pinned: true,
-                    backgroundColor: CustomColor.primaryScaffoldBackgroundColor,
-                  ),
-                  buildChatPane(
-                    context: context,
-                    size: size,
-                    currentUser: loginStore.currentUser!,
-                  ),
-                ],
-              ),
+            body: Column(
+              children: <Widget>[
+                SizedBox(height: 95.h),
+                ChatHeaderWidget(
+                  currentUser: loginStore.currentUser!,
+                  size: size,
+                ),
+                ChatBodyWidget(
+                  loginStore: loginStore,
+                  currentUser: loginStore.currentUser!,
+                  size: size,
+                ),
+              ],
             ),
           ),
         ),
       );
     });
   }
-
-  Widget buildChatPane(
-          {required BuildContext context,
-          required Size size,
-          required UserModel currentUser}) =>
-      SliverToBoxAdapter(
-        child: Column(
-          children: <Widget>[
-            ChatHeaderWidget(
-              currentUser: currentUser,
-              size: size,
-            ),
-            ChatBodyWidget(
-              users: users,
-              currentUser: currentUser,
-              size: size,
-            ),
-          ],
-        ),
-      );
 }

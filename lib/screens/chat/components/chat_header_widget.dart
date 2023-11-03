@@ -16,14 +16,15 @@ class ChatHeaderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: size.width.w * 0.015,
-        vertical: size.height.h * 0.00,
+        horizontal: size.width.w * 0.025,
+        vertical: size.height.h * 0.005,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SizedBox(
+          Container(
+            padding: EdgeInsets.symmetric(vertical: size.height * 0.002),
             child: Text(
               'Chats',
               style: TextStyle(
@@ -34,17 +35,22 @@ class ChatHeaderWidget extends StatelessWidget {
             ),
           ),
           Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              ChatRoundButton(press: () {}, iconData: Icons.add, size: size),
+              ChatRoundButton(
+                press: () {},
+                iconData: Icons.add,
+                size: size,
+              ),
               SizedBox(
                 width: size.width.w * 0.03,
               ),
               ChatRoundButton(
-                  press: () {},
-                  iconData: Icons.stay_primary_landscape_rounded,
-                  size: size),
+                press: () {},
+                iconData: Icons.stay_primary_landscape_rounded,
+                size: size,
+              ),
             ],
           ),
         ],

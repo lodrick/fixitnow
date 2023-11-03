@@ -15,29 +15,27 @@ class ChatRoundButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: GestureDetector(
-        onTap: press,
-        child: Container(
-          alignment: Alignment.center,
-          height: 32.h,
-          width: 32.w,
-          decoration: BoxDecoration(
-            color: CustomColor.primaryColors,
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black12,
-                offset: const Offset(0, 3),
-                blurRadius: 8.r,
-              ),
-            ],
-          ),
-          child: Icon(
-            iconData,
-            size: 22,
-            color: Colors.white,
-          ),
+    return GestureDetector(
+      onTap: press,
+      child: Container(
+        alignment: Alignment.center,
+        height: 32.h,
+        width: 32.w,
+        decoration: BoxDecoration(
+          color: CustomColor.primaryColors,
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              offset: const Offset(0, 3),
+              blurRadius: 8.r,
+            ),
+          ],
+        ),
+        child: Icon(
+          iconData,
+          size: 22,
+          color: Colors.white,
         ),
       ),
     );

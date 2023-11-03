@@ -37,8 +37,8 @@ class SearchUserChart extends StatelessWidget {
                 debugPrint(value);
               },
               style: TextStyle(
-                fontSize: 18.sp,
-                fontWeight: FontWeight.w600,
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w400,
               ),
               decoration: InputDecoration(
                 border: const OutlineInputBorder(

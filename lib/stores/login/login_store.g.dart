@@ -153,6 +153,21 @@ mixin _$LoginStore on LoginStoreBase, Store {
     });
   }
 
+  late final _$usersAtom = Atom(name: 'LoginStoreBase.users', context: context);
+
+  @override
+  List<UserModel>? get users {
+    _$usersAtom.reportRead();
+    return super.users;
+  }
+
+  @override
+  set users(List<UserModel>? value) {
+    _$usersAtom.reportWrite(value, super.users, () {
+      super.users = value;
+    });
+  }
+
   late final _$isAlreadyAuthenticatedAsyncAction =
       AsyncAction('LoginStoreBase.isAlreadyAuthenticated', context: context);
 
@@ -199,6 +214,14 @@ mixin _$LoginStore on LoginStoreBase, Store {
     return _$retriveUserAsyncAction.run(() => super.retriveUser(authUid));
   }
 
+  late final _$retrieveUsersAsyncAction =
+      AsyncAction('LoginStoreBase.retrieveUsers', context: context);
+
+  @override
+  Future<List<UserModel>> retrieveUsers() {
+    return _$retrieveUsersAsyncAction.run(() => super.retrieveUsers());
+  }
+
   late final _$signOutAsyncAction =
       AsyncAction('LoginStoreBase.signOut', context: context);
 
@@ -218,7 +241,8 @@ isShowConfetti: ${isShowConfetti},
 loginScaffoldKey: ${loginScaffoldKey},
 otpScaffoldKey: ${otpScaffoldKey},
 firebaseUser: ${firebaseUser},
-currentUser: ${currentUser}
+currentUser: ${currentUser},
+users: ${users}
     ''';
   }
 }

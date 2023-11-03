@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fixitnow/api/user_api.dart';
 import 'package:fixitnow/models/user_model.dart';
 import 'package:fixitnow/screens/entryPoint/entry_point.dart';
 import 'package:fixitnow/screens/home/home_screen.dart';
@@ -17,7 +18,7 @@ class LoginStore = LoginStoreBase with _$LoginStore;
 
 abstract class LoginStoreBase with Store {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final String uri = 'http://10.0.0.107:9090/api';
+  final String uri = UserApi.userUri;
   String actualCode = '';
   @observable
   bool isloginLoading = false;
@@ -43,6 +44,9 @@ abstract class LoginStoreBase with Store {
 
   @observable
   UserModel? currentUser;
+
+  @observable
+  List<UserModel>? users;
 
   @action
   Future<bool> isAlreadyAuthenticated() async {
@@ -234,6 +238,30 @@ abstract class LoginStoreBase with Store {
       debugPrint('$e');
     }
     return null;
+  }
+
+  @action
+  Future<List<UserModel>> retrieveUsers() async {
+    try {
+      final response = await http
+          .get(Uri.parse('$uri/v1/customers'), headers: <String, String>{});
+      Iterable json = {};
+
+      if (response.body.isNotEmpty &&
+          jsonDecode(response.body)['status'] == 200) {
+        json = jsonDecode(response.body)['object'] as Iterable;
+        Iterable iterable = json;
+
+        users = List<UserModel>.from(
+          iterable.map((model) => UserModel.fromJson(model)),
+        );
+      }
+
+      debugPrint('Users: $users');
+    } on Exception catch (e) {
+      debugPrint('$e');
+    }
+    return users!;
   }
 
   @action
