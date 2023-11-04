@@ -14,29 +14,38 @@ class UserModel {
   final String photoUrl;
   final String phoneNumber;
   final Set<RoleModel> roles;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final int status;
 
   UserModel(
-    this.uid,
-    this.authUid,
-    this.firstName,
-    this.lastName,
-    this.about,
-    this.email,
-    this.photoUrl,
-    this.phoneNumber,
-    this.roles,
-  );
+      this.uid,
+      this.authUid,
+      this.firstName,
+      this.lastName,
+      this.about,
+      this.email,
+      this.photoUrl,
+      this.phoneNumber,
+      this.roles,
+      this.createdAt,
+      this.updatedAt,
+      this.status)
+      : super();
 
-  UserModel.copy({
-    required this.authUid,
-    required this.firstName,
-    required this.lastName,
-    this.about,
-    this.email,
-    required this.photoUrl,
-    required this.phoneNumber,
-    required this.roles,
-  });
+  UserModel.copy(
+      {required this.authUid,
+      required this.firstName,
+      required this.lastName,
+      this.about,
+      this.email,
+      required this.photoUrl,
+      required this.phoneNumber,
+      required this.roles,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.status})
+      : super();
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>
       _$UserModelFromJson(json);
@@ -44,7 +53,7 @@ class UserModel {
   Map<String, dynamic> toJson() => _$UserModelToJson(this);
 }
 
-Set<RoleModel> setRole = {};
+/*Set<RoleModel> setRole = {};
 List<UserModel> users = [
   UserModel(
       2,
@@ -76,4 +85,4 @@ List<UserModel> users = [
       'https://cdn4.iconfinder.com/data/icons/basic-interface-overcolor/512/user-512.png',
       '_phoneNumber',
       setRole),
-];
+];*/

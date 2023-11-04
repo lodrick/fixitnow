@@ -1,10 +1,15 @@
 import 'package:fixitnow/models/rating_dto.dart';
 import 'package:fixitnow/models/user_model.dart';
+import 'package:fixitnow/screens/loader_hub.dart';
 import 'package:fixitnow/screens/profile/components/button_widget.dart';
 import 'package:fixitnow/screens/profile/components/numbers_widget.dart';
 import 'package:fixitnow/screens/profile/components/profile_widget.dart';
+import 'package:fixitnow/stores/login/login_store.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:rive/rive.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -14,6 +19,21 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  late SMITrigger error;
+  late SMITrigger success;
+  late SMITrigger reset;
+  late SMITrigger confetti;
+
+  void _onCheckRiveInit(Artboard artboard) {
+    StateMachineController? controller =
+        StateMachineController.fromArtboard(artboard, 'State Machine 1');
+
+    artboard.addController(controller!);
+    error = controller.findInput<bool>('Error') as SMITrigger;
+    success = controller.findInput<bool>('Check') as SMITrigger;
+    reset = controller.findInput<bool>('Reset') as SMITrigger;
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -24,30 +44,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
       RatingDto('50', 'Followers'),
     ];
 
-    return Center(
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: 58.h),
-              ProfileWidget(
-                imageUrl:
-                    'https://cdn4.iconfinder.com/data/icons/basic-interface-overcolor/512/user-512.png',
-                onPress: () {},
+    return Consumer<LoginStore>(builder: (_, loginStore, __) {
+      return Observer(
+        builder: (_) => LoaderHud(
+            inAsyncCall: true,
+            loading: RiveAnimation.asset(
+              'assets/RiveAssets/check.riv',
+              fit: BoxFit.cover,
+              onInit: _onCheckRiveInit,
+            ),
+            child: Center(
+              child: Scaffold(
+                body: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      SizedBox(height: 58.h),
+                      ProfileWidget(
+                        imageUrl:
+                            'https://cdn4.iconfinder.com/data/icons/basic-interface-overcolor/512/user-512.png',
+                        onPress: () {},
+                      ),
+                      SizedBox(height: size.height * 0.025),
+                      buildName(loginStore.currentUser!),
+                      SizedBox(height: size.height * 0.03),
+                      Center(child: buildUpgradeButton()),
+                      SizedBox(height: size.height * 0.03),
+                      NumbersWidget(ratingDto: ratingDtos),
+                      SizedBox(height: size.height * 0.02),
+                      buildAbout(loginStore.currentUser!),
+                    ],
+                  ),
+                ),
               ),
-              SizedBox(height: size.height * 0.025),
-              buildName(users.first),
-              SizedBox(height: size.height * 0.03),
-              Center(child: buildUpgradeButton()),
-              SizedBox(height: size.height * 0.03),
-              NumbersWidget(ratingDto: ratingDtos),
-              SizedBox(height: size.height * 0.02),
-              buildAbout(users.first),
-            ],
-          ),
-        ),
-      ),
-    );
+            )),
+      );
+    });
   }
 
   Widget buildName(UserModel userModel) => Column(

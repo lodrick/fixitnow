@@ -203,6 +203,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
               photoUrl:
                   'https://cdn4.iconfinder.com/data/icons/basic-interface-overcolor/512/user-512.png',
               roles: roleset,
+              createdAt: DateTime.now(),
+              status: 1,
+              updatedAt: DateTime.now(),
             );
 
             userStore.registerUser(context: context, user: userModel);

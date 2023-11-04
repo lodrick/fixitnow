@@ -18,6 +18,9 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       (json['roles'] as List<dynamic>)
           .map((e) => RoleModel.fromJson(e as Map<String, dynamic>))
           .toSet(),
+      DateTime.parse(json['createdAt'] as String),
+      DateTime.parse(json['updatedAt'] as String),
+      json['status'] as int,
     );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) {
@@ -38,5 +41,8 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) {
   val['photoUrl'] = instance.photoUrl;
   val['phoneNumber'] = instance.phoneNumber;
   val['roles'] = instance.roles.toList();
+  val['createdAt'] = instance.createdAt.toIso8601String();
+  val['updatedAt'] = instance.updatedAt.toIso8601String();
+  val['status'] = instance.status;
   return val;
 }

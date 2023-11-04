@@ -1,7 +1,5 @@
 import 'package:fixitnow/screens/chat/components/chat_body_widget.dart';
 import 'package:fixitnow/screens/chat/components/chat_header_widget.dart';
-import 'package:fixitnow/screens/chat/components/chat_round_button.dart';
-import 'package:fixitnow/screens/chat/users_chat.dart';
 import 'package:fixitnow/screens/loader_hub.dart';
 import 'package:fixitnow/stores/login/login_store.dart';
 import 'package:flutter/material.dart';
@@ -10,16 +8,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:rive/rive.dart';
 
-class ChatScreen extends StatefulWidget {
-  const ChatScreen({
-    super.key,
-  });
+class UsersChatScreen extends StatefulWidget {
+  const UsersChatScreen({super.key, required});
 
   @override
-  State<ChatScreen> createState() => _ChatScreenState();
+  State<UsersChatScreen> createState() => _UsersChatScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _UsersChatScreenState extends State<UsersChatScreen> {
   late SMITrigger error;
   late SMITrigger success;
   late SMITrigger reset;
@@ -35,7 +31,6 @@ class _ChatScreenState extends State<ChatScreen> {
     reset = controller.findInput<bool>('Reset') as SMITrigger;
   }
 
-  int userId = 2; //todo to use it as a parameter
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -53,29 +48,14 @@ class _ChatScreenState extends State<ChatScreen> {
               children: <Widget>[
                 SizedBox(height: 95.h),
                 ChatHeaderWidget(
-                  titleHeader: 'Title',
-                  addWidget: ChatRoundButton(
-                    press: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const UsersChatScreen(),
-                        ),
-                      );
-                    },
-                    iconData: Icons.add,
-                    size: size,
-                  ),
-                  landscapeWidget: ChatRoundButton(
-                    press: () {},
-                    iconData: Icons.stay_primary_landscape_rounded,
-                    size: size,
-                  ),
+                  titleHeader: 'Users',
+                  addWidget: const SizedBox.shrink(),
+                  landscapeWidget: const SizedBox.shrink(),
                   size: size,
                 ),
                 ChatBodyWidget(
                   currentUser: loginStore.currentUser!,
-                  isUsers: false,
+                  isUsers: true,
                   size: size,
                 ),
               ],

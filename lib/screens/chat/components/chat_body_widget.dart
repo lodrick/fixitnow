@@ -3,24 +3,21 @@ import 'package:fixitnow/models/user_model.dart';
 import 'package:fixitnow/screens/chat/components/custom_card.dart';
 import 'package:fixitnow/screens/chat/components/search_user_chat.dart';
 import 'package:fixitnow/screens/chat/peer_chat.dart';
-import 'package:fixitnow/stores/login/login_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChatBodyWidget extends StatelessWidget {
-  const ChatBodyWidget({
-    super.key,
-    required this.loginStore,
-    required this.currentUser,
-    required this.size,
-  });
-  final LoginStore loginStore;
+  const ChatBodyWidget(
+      {super.key,
+      required this.currentUser,
+      required this.size,
+      required this.isUsers});
   final UserModel currentUser;
+  final bool isUsers;
   final Size size;
 
   @override
   Widget build(BuildContext context) {
-    loginStore.retrieveUsers();
     return Expanded(
       child: Container(
         padding: EdgeInsets.symmetric(
@@ -69,10 +66,10 @@ class ChatBodyWidget extends StatelessWidget {
                       return ListView.builder(
                         physics: const BouncingScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: loginStore.users!.length,
+                        itemCount: users.length,
                         itemBuilder: (context, index) {
-                          final peerUser = loginStore.users![index];
-                          return peerUser.uid != currentUser.uid
+                          final peerUser = users[index];
+                          return isUsers
                               ? CustomCard(
                                   userModel: peerUser,
                                   press: () {
@@ -86,7 +83,22 @@ class ChatBodyWidget extends StatelessWidget {
                                     );
                                   },
                                 )
-                              : const SizedBox.shrink();
+                              : peerUser.uid != currentUser.uid
+                                  ? CustomCard(
+                                      userModel: peerUser,
+                                      press: () {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                PeerChatScreen(
+                                              peerUser: peerUser,
+                                              currentUser: currentUser,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    )
+                                  : const SizedBox.shrink();
                         },
                       );
                     }

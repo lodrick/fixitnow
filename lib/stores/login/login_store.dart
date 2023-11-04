@@ -208,7 +208,7 @@ abstract class LoginStoreBase with Store {
 
       final json = jsonDecode(response.body)['object'] as Map<String, dynamic>;
       currentUser = UserModel.fromJson(json);
-      Future.delayed(const Duration(seconds: 2), () {
+      Future.delayed(const Duration(seconds: 1), () {
         Navigator.push(
           context,
           MaterialPageRoute(

@@ -1,16 +1,18 @@
-import 'package:fixitnow/models/user_model.dart';
-import 'package:fixitnow/screens/chat/components/chat_round_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChatHeaderWidget extends StatelessWidget {
   const ChatHeaderWidget({
     super.key,
-    required this.currentUser,
     required this.size,
+    required this.addWidget,
+    required this.landscapeWidget,
+    required this.titleHeader,
   });
   final Size size;
-  final UserModel currentUser;
+  final String titleHeader;
+  final Widget addWidget;
+  final Widget landscapeWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,7 @@ class ChatHeaderWidget extends StatelessWidget {
           Container(
             padding: EdgeInsets.symmetric(vertical: size.height * 0.002),
             child: Text(
-              'Chats',
+              titleHeader,
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 27.sp,
@@ -38,19 +40,11 @@ class ChatHeaderWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              ChatRoundButton(
-                press: () {},
-                iconData: Icons.add,
-                size: size,
-              ),
+              addWidget,
               SizedBox(
                 width: size.width.w * 0.03,
               ),
-              ChatRoundButton(
-                press: () {},
-                iconData: Icons.stay_primary_landscape_rounded,
-                size: size,
-              ),
+              landscapeWidget,
             ],
           ),
         ],

@@ -10,8 +10,8 @@ class UserApi {
   static Stream<List<UserModel>> retrieveUsers() async* {
     Iterable iterable = {};
     try {
-      final response =
-          await http.get(Uri.parse('$userUri/'), headers: <String, String>{});
+      final response = await http
+          .get(Uri.parse('$userUri/v1/customers'), headers: <String, String>{});
 
       if (response.body.isNotEmpty &&
           jsonDecode(response.body)['status'] == 200) {
@@ -20,6 +20,7 @@ class UserApi {
     } on Exception catch (e) {
       debugPrint('$e');
     }
+
     yield iterable.isNotEmpty
         ? List<UserModel>.from(
             iterable.map((model) => UserModel.fromJson(model)))
