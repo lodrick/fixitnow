@@ -47,7 +47,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Consumer<LoginStore>(builder: (_, loginStore, __) {
       return Observer(
         builder: (_) => LoaderHud(
-            inAsyncCall: true,
+            inAsyncCall: false,
             loading: RiveAnimation.asset(
               'assets/RiveAssets/check.riv',
               fit: BoxFit.cover,
@@ -58,7 +58,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 body: SingleChildScrollView(
                   child: Column(
                     children: [
-                      SizedBox(height: 58.h),
+                      SizedBox(height: size.width * 0.25.h),
                       ProfileWidget(
                         imageUrl:
                             'https://cdn4.iconfinder.com/data/icons/basic-interface-overcolor/512/user-512.png',

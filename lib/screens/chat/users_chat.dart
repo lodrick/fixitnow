@@ -1,10 +1,10 @@
 import 'package:fixitnow/screens/chat/components/chat_body_widget.dart';
 import 'package:fixitnow/screens/chat/components/chat_header_widget.dart';
 import 'package:fixitnow/screens/loader_hub.dart';
+import 'package:fixitnow/screens/notification/components/circle_button.dart';
 import 'package:fixitnow/stores/login/login_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:rive/rive.dart';
 
@@ -46,7 +46,31 @@ class _UsersChatScreenState extends State<UsersChatScreen> {
           child: Scaffold(
             body: Column(
               children: <Widget>[
-                SizedBox(height: 95.h),
+                Container(
+                  padding: EdgeInsets.only(
+                    top: size.width * 0.025,
+                    right: size.width * 0.015,
+                    left: size.width * 0.025,
+                  ),
+                  //height: 95.h,
+                  child: Row(
+                    children: <Widget>[
+                      CircleButton(
+                        press: () {
+                          Navigator.of(context).pop();
+                        },
+                        size: size,
+                        height: 40,
+                        width: 40,
+                        edgeInsets: EdgeInsets.only(
+                          top: size.height * 0.00,
+                          bottom: size.height * 0.000,
+                        ),
+                        assetsUrl: 'assets/icons/icon-back.png',
+                      ),
+                    ],
+                  ),
+                ),
                 ChatHeaderWidget(
                   titleHeader: 'Users',
                   addWidget: const SizedBox.shrink(),

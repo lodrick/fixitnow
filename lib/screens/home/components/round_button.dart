@@ -15,37 +15,35 @@ class RoundButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: GestureDetector(
-        onTap: press,
-        child: Container(
-          margin: EdgeInsets.only(
-            top: size.height * 0.02,
-            bottom: size.height * 0.006,
-          ),
-          height: 40.h,
-          width: 40.w,
-          padding: EdgeInsets.symmetric(
-            horizontal: 7.5.w,
-            vertical: 7.5.h,
-          ),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black12,
-                offset: const Offset(0, 3),
-                blurRadius: 8.r,
-              ),
-            ],
-          ),
-          child: SvgPicture.asset(
-            riveAssetsUrl,
-            fit: BoxFit.fill,
-            height: 6.h,
-            width: 6.w,
-          ),
+    return GestureDetector(
+      onTap: press,
+      child: Container(
+        margin: EdgeInsets.only(
+          top: size.height * 0.02,
+          bottom: size.height * 0.006,
+        ),
+        height: 40.h,
+        width: 40.w,
+        padding: EdgeInsets.symmetric(
+          horizontal: 7.5.w,
+          vertical: 7.5.h,
+        ),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              offset: const Offset(0, 3),
+              blurRadius: 8.r,
+            ),
+          ],
+        ),
+        child: SvgPicture.asset(
+          riveAssetsUrl,
+          fit: BoxFit.fill,
+          height: 6.h,
+          width: 6.w,
         ),
       ),
     );

@@ -35,7 +35,6 @@ class _ChatScreenState extends State<ChatScreen> {
     reset = controller.findInput<bool>('Reset') as SMITrigger;
   }
 
-  int userId = 2; //todo to use it as a parameter
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -53,7 +52,7 @@ class _ChatScreenState extends State<ChatScreen> {
               children: <Widget>[
                 SizedBox(height: 95.h),
                 ChatHeaderWidget(
-                  titleHeader: 'Title',
+                  titleHeader: 'Chats',
                   addWidget: ChatRoundButton(
                     press: () {
                       Navigator.push(

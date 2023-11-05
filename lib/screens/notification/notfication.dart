@@ -62,8 +62,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   expandedHeight: widget.size.height * 0.3,
                   floating: true,
                   pinned: true,
-                  backgroundColor: CustomColor.primaryScaffoldBackgroundColor,
+                  backgroundColor: const Color.fromRGBO(238, 241, 248, 1),
                   flexibleSpace: Container(
+                    padding: EdgeInsets.only(top: widget.size.width * 0.095.h),
                     decoration: BoxDecoration(
                       color: CustomColor.primaryColors.withOpacity(0.2),
                       image: DecorationImage(
@@ -95,7 +96,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           ),
                         ),
                         Positioned(
-                          top: 0,
+                          top: -40,
                           left: 0,
                           child: Container(
                             padding: EdgeInsets.symmetric(
