@@ -1,4 +1,4 @@
-import 'package:fixitnow/models/role_model.dart';
+import 'package:fixitnow/models/role/role_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user_model.g.dart';

@@ -1,5 +1,5 @@
 import 'package:fixitnow/api/user_api.dart';
-import 'package:fixitnow/models/user_model.dart';
+import 'package:fixitnow/models/user/user_model.dart';
 import 'package:fixitnow/screens/chat/components/custom_card.dart';
 import 'package:fixitnow/screens/chat/components/search_user_chat.dart';
 import 'package:fixitnow/screens/chat/peer_chat.dart';

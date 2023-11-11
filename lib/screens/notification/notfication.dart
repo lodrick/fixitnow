@@ -1,5 +1,5 @@
 import 'package:fixitnow/models/rating_dto.dart';
-import 'package:fixitnow/models/user_model.dart';
+import 'package:fixitnow/models/user/user_model.dart';
 import 'package:fixitnow/screens/loader_hub.dart';
 import 'package:fixitnow/screens/notification/components/circle_button.dart';
 import 'package:fixitnow/screens/profile/components/button_widget.dart';

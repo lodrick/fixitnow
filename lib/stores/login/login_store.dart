@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fixitnow/api/user_api.dart';
-import 'package:fixitnow/models/user_model.dart';
+import 'package:fixitnow/models/user/user_model.dart';
 import 'package:fixitnow/screens/entryPoint/entry_point.dart';
 import 'package:fixitnow/screens/home/home_screen.dart';
 import 'package:fixitnow/screens/onboarding/onboarding_screen.dart';

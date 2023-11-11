@@ -1,5 +1,5 @@
 import 'package:fixitnow/models/message_model.dart';
-import 'package:fixitnow/models/user_model.dart';
+import 'package:fixitnow/models/user/user_model.dart';
 import 'package:fixitnow/screens/chat/components/message_widget.dart';
 import 'package:flutter/material.dart';
 

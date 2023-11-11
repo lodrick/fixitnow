@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:fixitnow/models/role_model.dart';
-import 'package:fixitnow/models/user_model.dart';
+import 'package:fixitnow/models/role/role_model.dart';
+import 'package:fixitnow/models/user/user_model.dart';
 import 'package:fixitnow/screens/loader_hub.dart';
 import 'package:fixitnow/stores/login/login_store.dart';
 import 'package:fixitnow/utils/custom_color.dart';
