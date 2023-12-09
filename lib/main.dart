@@ -1,4 +1,6 @@
+import 'package:camera/camera.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:fixitnow/screens/common/components/camera_widget.dart';
 import 'package:fixitnow/screens/onboarding/onboarding_screen.dart';
 import 'package:fixitnow/stores/login/login_store.dart';
 import 'package:fixitnow/utils/custom_color.dart';
@@ -12,7 +14,7 @@ const mockUpWidth = 411;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  //cameras = await availableCameras();
+  cameras = await availableCameras();
   runApp(const MyApp());
 }
 

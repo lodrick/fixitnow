@@ -510,6 +510,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.9.0"
+  flutter_storage_path:
+    dependency: "direct main"
+    description:
+      name: flutter_storage_path
+      sha256: fd3b5aa9107e0a74218473bafcaa9fbaf07a7f9e3647d6130cabde5fdef96a56
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.4"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -1056,6 +1064,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.4.0"
+  photo_manager:
+    dependency: "direct main"
+    description:
+      name: photo_manager
+      sha256: c1f21882f22c97cc85a8a67b08d7b979a03c9b7f18f940c10c6860b3a49581d3
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.8.0"
   pixel_perfect:
     dependency: "direct main"
     description:

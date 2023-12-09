@@ -1,5 +1,6 @@
 import 'package:fixitnow/models/rating_dto.dart';
 import 'package:fixitnow/models/user/user_model.dart';
+import 'package:fixitnow/screens/common/components/camera_widget.dart';
 import 'package:fixitnow/screens/loader_hub.dart';
 import 'package:fixitnow/screens/profile/components/button_widget.dart';
 import 'package:fixitnow/screens/profile/components/numbers_widget.dart';
@@ -57,12 +58,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Scaffold(
                 body: SingleChildScrollView(
                   child: Column(
-                    children: [
+                    children: <Widget>[
                       SizedBox(height: size.width * 0.25.h),
                       ProfileWidget(
                         imageUrl:
                             'https://cdn4.iconfinder.com/data/icons/basic-interface-overcolor/512/user-512.png',
-                        onPress: () {},
+                        onPress: () {
+                          debugPrint('detcher');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const CameraWidget(),
+                            ),
+                          );
+                        },
                       ),
                       SizedBox(height: size.height * 0.025),
                       buildName(loginStore.currentUser!),
