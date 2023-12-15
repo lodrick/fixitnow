@@ -18,6 +18,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Position? currentPosition;
   LatLng? geoLocationPoint;
+  bool isDescriptionDisplay = false;
 
   @override
   void initState() {
@@ -33,23 +34,47 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: (geoLocationPoint != null)
-          ? GoogleMap(
-              initialCameraPosition: CameraPosition(
-                  target: geoLocationPoint!, zoom: 12.0, bearing: 0),
-              mapType: MapType.normal,
-              onMapCreated: (GoogleMapController controller) {
-                _googleMapController.complete(controller);
-              },
-              markers: _createMarker(),
-              myLocationEnabled: true,
-              myLocationButtonEnabled: true,
-              trafficEnabled: true,
-            )
-          : const Center(
-              child: CircularProgressIndicator(
-              color: CustomColor.kShadowColor,
-            )),
+      body: Stack(
+        children: [
+          (geoLocationPoint != null)
+              ? GoogleMap(
+                  initialCameraPosition: CameraPosition(
+                      target: geoLocationPoint!, zoom: 12.0, bearing: 0),
+                  mapType: MapType.normal,
+                  onMapCreated: (GoogleMapController controller) {
+                    _googleMapController.complete(controller);
+                  },
+                  markers: _createMarker(),
+                  myLocationEnabled: true,
+                  myLocationButtonEnabled: true,
+                  trafficEnabled: true,
+                  circles: {
+                    Circle(
+                      circleId: const CircleId('1'),
+                      center: geoLocationPoint!,
+                      strokeWidth: 2,
+                      fillColor: Colors.blue.withOpacity(0.2),
+                      radius: 5000,
+                      strokeColor: CustomColor.primaryColors.withOpacity(.5),
+                      visible: true,
+                    ),
+                  },
+                )
+              : const Center(
+                  child: CircularProgressIndicator(
+                    color: CustomColor.kShadowColor,
+                  ),
+                ),
+          const Positioned(
+            bottom: 23,
+            child: ListTile(
+              title: Text('Lodrick Mpanze'),
+              subtitle: Text(
+                  'Software developer with \n exceptional development skills'),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -67,14 +92,39 @@ class _SearchScreenState extends State<SearchScreen> {
         markerId: const MarkerId('markerId'),
         position: geoLocationPoint!,
         infoWindow: const InfoWindow(
-            title: 'Lodrick Mpanze',
-            snippet:
-                'Software developer with \n exceptional development skills'),
+          title: 'Lodrick Mpanze',
+          snippet: 'Software developer with \n exceptional development skills',
+        ),
+        onTap: () {
+          setState(() {
+            isDescriptionDisplay = !isDescriptionDisplay;
+          });
+        },
       ),
       const Marker(
         markerId: MarkerId("marker_2"),
-        position: LatLng(18.997962200185533, 72.8379758747611),
+        position: LatLng(-26.0575981, 27.9104467),
+        infoWindow: InfoWindow(
+          title: 'Alwande Mpanze',
+          snippet: 'Software developer with \n exceptional development skills',
+        ),
+      ),
+      const Marker(
+        markerId: MarkerId("marker_3"),
+        position: LatLng(-26.0786002, 27.9250766),
+        infoWindow: InfoWindow(
+          title: 'Us Mpanze',
+          snippet: 'Software developer with \n exceptional development skills',
+        ),
       ),
     };
   }
+
+  // var  circles = {
+  //   Circle(
+  //     circleId: const CircleId("markerId"),
+  //     center:  LatLng(latitude, longitude),
+  //     radius: 4000.0,
+  //   )
+  // };
 }

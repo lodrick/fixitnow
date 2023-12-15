@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:fixitnow/models/role/role_model.dart';
 import 'package:fixitnow/models/user/user_model.dart';
 import 'package:fixitnow/screens/loader_hub.dart';
+import 'package:fixitnow/screens/register/components/service_dialog.dart';
 import 'package:fixitnow/stores/login/login_store.dart';
 import 'package:fixitnow/utils/custom_color.dart';
 import 'package:flutter/cupertino.dart';
@@ -198,6 +199,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               lastName: _controllerLastName.text.trim(),
               about: _controllerAbout.text.trim(),
               email: _controllerEmail.text.trim(),
+              isServiceProvider: isChecked,
               authUid: widget.authId.trim(),
               phoneNumber: widget.phoneNumber.trim(),
               photoUrl:
@@ -291,17 +293,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   setState(() {
                     isChecked = value!;
                   });
+                  showCustomServiceDialog(context, onValue: (_) {
+                    setState(() {
+                      isChecked = false;
+                    });
+                  });
                 },
               ),
-              isChecked
-                  ? inputTextField(
-                      hintText: 'Say something about your work',
-                      iconData: Icons.email_outlined,
-                      context: context,
-                      controller: _controllerAbout,
-                      maxLines: 4,
-                    )
-                  : const SizedBox.shrink(),
+              // isChecked
+              //     ? inputTextField(
+              //         hintText: 'Say something about your work',
+              //         iconData: Icons.email_outlined,
+              //         context: context,
+              //         controller: _controllerAbout,
+              //         maxLines: 4,
+              //       )
+              //     : const SizedBox.shrink(),
             ],
           ),
         ),

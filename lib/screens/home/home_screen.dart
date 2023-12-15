@@ -1,4 +1,4 @@
-import 'package:fixitnow/models/service/service.dart';
+import 'package:fixitnow/models/service/service_model.dart';
 import 'package:fixitnow/screens/home/components/products_widget.dart';
 import 'package:fixitnow/screens/home/components/round_button.dart';
 import 'package:fixitnow/screens/home/components/service_widget.dart';

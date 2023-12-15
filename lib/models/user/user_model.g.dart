@@ -13,6 +13,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       json['lastName'] as String,
       json['about'] as String?,
       json['email'] as String?,
+      json['isServiceProvider'] as bool,
       json['photoUrl'] as String,
       json['phoneNumber'] as String,
       (json['roles'] as List<dynamic>)
@@ -38,6 +39,7 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) {
   val['lastName'] = instance.lastName;
   writeNotNull('about', instance.about);
   writeNotNull('email', instance.email);
+  val['isServiceProvider'] = instance.isServiceProvider;
   val['photoUrl'] = instance.photoUrl;
   val['phoneNumber'] = instance.phoneNumber;
   val['roles'] = instance.roles.toList();

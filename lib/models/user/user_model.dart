@@ -11,6 +11,7 @@ class UserModel {
   final String lastName;
   String? about;
   String? email;
+  final bool isServiceProvider;
   final String photoUrl;
   final String phoneNumber;
   final Set<RoleModel> roles;
@@ -25,6 +26,7 @@ class UserModel {
       this.lastName,
       this.about,
       this.email,
+      this.isServiceProvider,
       this.photoUrl,
       this.phoneNumber,
       this.roles,
@@ -39,6 +41,7 @@ class UserModel {
       required this.lastName,
       this.about,
       this.email,
+      required this.isServiceProvider,
       required this.photoUrl,
       required this.phoneNumber,
       required this.roles,
