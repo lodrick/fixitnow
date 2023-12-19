@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'login_store.dart';
+part of 'session_context.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,9 +8,9 @@ part of 'login_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$LoginStore on LoginStoreBase, Store {
+mixin _$SessionContext on SessionContextBase, Store {
   late final _$isloginLoadingAtom =
-      Atom(name: 'LoginStoreBase.isloginLoading', context: context);
+      Atom(name: 'SessionContextBase.isloginLoading', context: context);
 
   @override
   bool get isloginLoading {
@@ -26,7 +26,7 @@ mixin _$LoginStore on LoginStoreBase, Store {
   }
 
   late final _$isOtpLoadingAtom =
-      Atom(name: 'LoginStoreBase.isOtpLoading', context: context);
+      Atom(name: 'SessionContextBase.isOtpLoading', context: context);
 
   @override
   bool get isOtpLoading {
@@ -42,7 +42,7 @@ mixin _$LoginStore on LoginStoreBase, Store {
   }
 
   late final _$isShowPasscodeAtom =
-      Atom(name: 'LoginStoreBase.isShowPasscode', context: context);
+      Atom(name: 'SessionContextBase.isShowPasscode', context: context);
 
   @override
   bool get isShowPasscode {
@@ -58,7 +58,7 @@ mixin _$LoginStore on LoginStoreBase, Store {
   }
 
   late final _$isShowLoadingAtom =
-      Atom(name: 'LoginStoreBase.isShowLoading', context: context);
+      Atom(name: 'SessionContextBase.isShowLoading', context: context);
 
   @override
   bool get isShowLoading {
@@ -74,7 +74,7 @@ mixin _$LoginStore on LoginStoreBase, Store {
   }
 
   late final _$isShowConfettiAtom =
-      Atom(name: 'LoginStoreBase.isShowConfetti', context: context);
+      Atom(name: 'SessionContextBase.isShowConfetti', context: context);
 
   @override
   bool get isShowConfetti {
@@ -89,8 +89,88 @@ mixin _$LoginStore on LoginStoreBase, Store {
     });
   }
 
+  late final _$isUserCreatedAtom =
+      Atom(name: 'SessionContextBase.isUserCreated', context: context);
+
+  @override
+  bool get isUserCreated {
+    _$isUserCreatedAtom.reportRead();
+    return super.isUserCreated;
+  }
+
+  @override
+  set isUserCreated(bool value) {
+    _$isUserCreatedAtom.reportWrite(value, super.isUserCreated, () {
+      super.isUserCreated = value;
+    });
+  }
+
+  late final _$serviceModelAtom =
+      Atom(name: 'SessionContextBase.serviceModel', context: context);
+
+  @override
+  ServiceModel? get serviceModel {
+    _$serviceModelAtom.reportRead();
+    return super.serviceModel;
+  }
+
+  @override
+  set serviceModel(ServiceModel? value) {
+    _$serviceModelAtom.reportWrite(value, super.serviceModel, () {
+      super.serviceModel = value;
+    });
+  }
+
+  late final _$currentUserAtom =
+      Atom(name: 'SessionContextBase.currentUser', context: context);
+
+  @override
+  UserModel? get currentUser {
+    _$currentUserAtom.reportRead();
+    return super.currentUser;
+  }
+
+  @override
+  set currentUser(UserModel? value) {
+    _$currentUserAtom.reportWrite(value, super.currentUser, () {
+      super.currentUser = value;
+    });
+  }
+
+  late final _$usersAtom =
+      Atom(name: 'SessionContextBase.users', context: context);
+
+  @override
+  List<UserModel>? get users {
+    _$usersAtom.reportRead();
+    return super.users;
+  }
+
+  @override
+  set users(List<UserModel>? value) {
+    _$usersAtom.reportWrite(value, super.users, () {
+      super.users = value;
+    });
+  }
+
+  late final _$responseModelAtom =
+      Atom(name: 'SessionContextBase.responseModel', context: context);
+
+  @override
+  ResponseModel? get responseModel {
+    _$responseModelAtom.reportRead();
+    return super.responseModel;
+  }
+
+  @override
+  set responseModel(ResponseModel? value) {
+    _$responseModelAtom.reportWrite(value, super.responseModel, () {
+      super.responseModel = value;
+    });
+  }
+
   late final _$loginScaffoldKeyAtom =
-      Atom(name: 'LoginStoreBase.loginScaffoldKey', context: context);
+      Atom(name: 'SessionContextBase.loginScaffoldKey', context: context);
 
   @override
   GlobalKey<ScaffoldMessengerState> get loginScaffoldKey {
@@ -106,7 +186,7 @@ mixin _$LoginStore on LoginStoreBase, Store {
   }
 
   late final _$otpScaffoldKeyAtom =
-      Atom(name: 'LoginStoreBase.otpScaffoldKey', context: context);
+      Atom(name: 'SessionContextBase.otpScaffoldKey', context: context);
 
   @override
   GlobalKey<ScaffoldMessengerState> get otpScaffoldKey {
@@ -122,7 +202,7 @@ mixin _$LoginStore on LoginStoreBase, Store {
   }
 
   late final _$firebaseUserAtom =
-      Atom(name: 'LoginStoreBase.firebaseUser', context: context);
+      Atom(name: 'SessionContextBase.firebaseUser', context: context);
 
   @override
   User? get firebaseUser {
@@ -137,39 +217,9 @@ mixin _$LoginStore on LoginStoreBase, Store {
     });
   }
 
-  late final _$currentUserAtom =
-      Atom(name: 'LoginStoreBase.currentUser', context: context);
-
-  @override
-  UserModel? get currentUser {
-    _$currentUserAtom.reportRead();
-    return super.currentUser;
-  }
-
-  @override
-  set currentUser(UserModel? value) {
-    _$currentUserAtom.reportWrite(value, super.currentUser, () {
-      super.currentUser = value;
-    });
-  }
-
-  late final _$usersAtom = Atom(name: 'LoginStoreBase.users', context: context);
-
-  @override
-  List<UserModel>? get users {
-    _$usersAtom.reportRead();
-    return super.users;
-  }
-
-  @override
-  set users(List<UserModel>? value) {
-    _$usersAtom.reportWrite(value, super.users, () {
-      super.users = value;
-    });
-  }
-
-  late final _$isAlreadyAuthenticatedAsyncAction =
-      AsyncAction('LoginStoreBase.isAlreadyAuthenticated', context: context);
+  late final _$isAlreadyAuthenticatedAsyncAction = AsyncAction(
+      'SessionContextBase.isAlreadyAuthenticated',
+      context: context);
 
   @override
   Future<bool> isAlreadyAuthenticated() {
@@ -177,8 +227,9 @@ mixin _$LoginStore on LoginStoreBase, Store {
         .run(() => super.isAlreadyAuthenticated());
   }
 
-  late final _$getCodeWithPhoneNumberAsyncAction =
-      AsyncAction('LoginStoreBase.getCodeWithPhoneNumber', context: context);
+  late final _$getCodeWithPhoneNumberAsyncAction = AsyncAction(
+      'SessionContextBase.getCodeWithPhoneNumber',
+      context: context);
 
   @override
   Future<void> getCodeWithPhoneNumber(
@@ -188,7 +239,7 @@ mixin _$LoginStore on LoginStoreBase, Store {
   }
 
   late final _$validateOtpAndLoginAsyncAction =
-      AsyncAction('LoginStoreBase.validateOtpAndLogin', context: context);
+      AsyncAction('SessionContextBase.validateOtpAndLogin', context: context);
 
   @override
   Future<void> validateOtpAndLogin(BuildContext context, String smsCode) {
@@ -197,7 +248,7 @@ mixin _$LoginStore on LoginStoreBase, Store {
   }
 
   late final _$registerUserAsyncAction =
-      AsyncAction('LoginStoreBase.registerUser', context: context);
+      AsyncAction('SessionContextBase.registerUser', context: context);
 
   @override
   Future<void> registerUser(
@@ -207,7 +258,7 @@ mixin _$LoginStore on LoginStoreBase, Store {
   }
 
   late final _$retriveUserAsyncAction =
-      AsyncAction('LoginStoreBase.retriveUser', context: context);
+      AsyncAction('SessionContextBase.retriveUser', context: context);
 
   @override
   Future<UserModel?> retriveUser(String authUid) {
@@ -215,7 +266,7 @@ mixin _$LoginStore on LoginStoreBase, Store {
   }
 
   late final _$retrieveUsersAsyncAction =
-      AsyncAction('LoginStoreBase.retrieveUsers', context: context);
+      AsyncAction('SessionContextBase.retrieveUsers', context: context);
 
   @override
   Future<List<UserModel>> retrieveUsers() {
@@ -223,7 +274,7 @@ mixin _$LoginStore on LoginStoreBase, Store {
   }
 
   late final _$signOutAsyncAction =
-      AsyncAction('LoginStoreBase.signOut', context: context);
+      AsyncAction('SessionContextBase.signOut', context: context);
 
   @override
   Future<void> signOut(BuildContext context) {
@@ -238,11 +289,14 @@ isOtpLoading: ${isOtpLoading},
 isShowPasscode: ${isShowPasscode},
 isShowLoading: ${isShowLoading},
 isShowConfetti: ${isShowConfetti},
+isUserCreated: ${isUserCreated},
+serviceModel: ${serviceModel},
+currentUser: ${currentUser},
+users: ${users},
+responseModel: ${responseModel},
 loginScaffoldKey: ${loginScaffoldKey},
 otpScaffoldKey: ${otpScaffoldKey},
-firebaseUser: ${firebaseUser},
-currentUser: ${currentUser},
-users: ${users}
+firebaseUser: ${firebaseUser}
     ''';
   }
 }

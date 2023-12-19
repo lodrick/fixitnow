@@ -3,7 +3,7 @@ import 'package:fixitnow/screens/chat/components/chat_header_widget.dart';
 import 'package:fixitnow/screens/chat/components/chat_round_button.dart';
 import 'package:fixitnow/screens/chat/users_chat.dart';
 import 'package:fixitnow/screens/loader_hub.dart';
-import 'package:fixitnow/stores/login/login_store.dart';
+import 'package:fixitnow/stores/session/session_context.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -38,7 +38,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Consumer<LoginStore>(builder: (_, loginStore, __) {
+    return Consumer<SessionContext>(builder: (_, sessionContext, __) {
       return Observer(
         builder: (_) => LoaderHud(
           inAsyncCall: false,
@@ -73,7 +73,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   size: size,
                 ),
                 ChatBodyWidget(
-                  currentUser: loginStore.currentUser!,
+                  currentUser: sessionContext.currentUser!,
                   isUsers: false,
                   size: size,
                 ),

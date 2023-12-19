@@ -43,7 +43,7 @@ class _ServiceFormState extends State<ServiceForm> {
     super.initState();
     subServices.add({'title': 'Installation', 'isChecked': false});
     subServices.add({'title': 'Maintainance', 'isChecked': false});
-    subServices.add({'title': 'Reparations', 'isChecked': false});
+    subServices.add({'title': 'Repair', 'isChecked': false});
   }
 
   @override
@@ -86,9 +86,10 @@ class _ServiceFormState extends State<ServiceForm> {
 
             for (SubService subService in allSubServices) {
               if (subService.isChecked == true) {
-                debugPrint(subService.toString());
+                debugPrint(subService.title);
               }
             }
+            Navigator.of(context).pop();
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: CustomColor.primaryColors,
@@ -122,27 +123,29 @@ class _ServiceFormState extends State<ServiceForm> {
           'Sub-services',
           style: TextStyle(
             fontSize: 18,
-            fontFamily: "Poppins",
+            fontFamily: 'Poppins',
             fontWeight: FontWeight.w600,
           ),
         ),
         ListView.builder(
-            shrinkWrap: true,
-            itemCount: subServices.length,
-            itemBuilder: (context, index) {
-              return CheckboxListTile(
-                title: Text(
-                  subServices[index]['title'],
-                  style: const TextStyle(color: Colors.black87),
-                ),
-                value: subServices[index]['isChecked'],
-                onChanged: (value) {
-                  setState(() {
-                    subServices[index]['isChecked'] = value!;
-                  });
-                },
-              );
-            }),
+          shrinkWrap: true,
+          itemCount: subServices.length,
+          itemBuilder: (context, index) {
+            return CheckboxListTile(
+              title: Text(
+                subServices[index]['title'],
+                style: const TextStyle(color: Colors.black87),
+              ),
+              value: subServices[index]['isChecked'],
+              onChanged: (value) {
+                setState(() {
+                  subServices[index]['isChecked'] = value!;
+                });
+                //Navigator.of(context).pop();
+              },
+            );
+          },
+        ),
       ],
     );
   }

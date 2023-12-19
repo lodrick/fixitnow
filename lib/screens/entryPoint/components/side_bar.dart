@@ -1,6 +1,6 @@
 import 'package:fixitnow/models/menu.dart';
 import 'package:fixitnow/screens/loader_hub.dart';
-import 'package:fixitnow/stores/login/login_store.dart';
+import 'package:fixitnow/stores/session/session_context.dart';
 import 'package:fixitnow/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -21,7 +21,7 @@ class _SideBarState extends State<SideBar> {
   Menu selectedSideMenu = sidebarMenus.first;
   @override
   Widget build(BuildContext context) {
-    return Consumer<LoginStore>(builder: (_, userStore, __) {
+    return Consumer<SessionContext>(builder: (_, sessionContext, __) {
       return Observer(
         builder: (_) => LoaderHud(
           inAsyncCall: false,
@@ -43,7 +43,7 @@ class _SideBarState extends State<SideBar> {
                   children: [
                     InfoCard(
                       name:
-                          '${userStore.currentUser!.firstName} ${userStore.currentUser!.lastName}',
+                          '${sessionContext.currentUser!.firstName} ${sessionContext.currentUser!.lastName}',
                       bio: "YouTuber",
                     ),
                     Padding(

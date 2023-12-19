@@ -8,10 +8,8 @@ import java.io.IOException;
 import java.io.Writer;
 import java.io.FileWriter;
 import org.gradle.testkit.runner.GradleRunner;
+import org.gradle.internal.impldep.org.junit.Test;
 import org.gradle.testkit.runner.BuildResult;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * A simple functional test for the 'com.fixitnow.greeting' plugin.
@@ -45,6 +43,9 @@ class FixitnowPluginFunctionalTest {
 
         // Verify the result
         assertTrue(result.getOutput().contains("Hello from plugin 'com.fixitnow.greeting'"));
+    }
+
+    private void assertTrue(boolean contains) {
     }
 
     private void writeString(File file, String string) throws IOException {

@@ -4,7 +4,7 @@ import 'package:fixitnow/screens/loader_hub.dart';
 import 'package:fixitnow/screens/notification/components/circle_button.dart';
 import 'package:fixitnow/screens/profile/components/button_widget.dart';
 import 'package:fixitnow/screens/profile/components/numbers_widget.dart';
-import 'package:fixitnow/stores/login/login_store.dart';
+import 'package:fixitnow/stores/session/session_context.dart';
 import 'package:fixitnow/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -46,7 +46,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       RatingDto('35', 'Following'),
       RatingDto('50', 'Followers'),
     ];
-    return Consumer<LoginStore>(builder: (_, loginStore, __) {
+    return Consumer<SessionContext>(builder: (_, sessionContext, __) {
       return Observer(
         builder: (_) => LoaderHud(
           inAsyncCall: false,
@@ -128,7 +128,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 ),
                 buildNotificationContent(
                     ratingDtos: ratingDtos,
-                    currentUser: loginStore.currentUser!),
+                    currentUser: sessionContext.currentUser!),
               ],
             ),
           ),

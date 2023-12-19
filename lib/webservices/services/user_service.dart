@@ -1,9 +1,10 @@
+import 'package:fixitnow/models/response.dart';
 import 'package:fixitnow/models/user/user_model.dart';
 
 abstract class UserServices {
-  String createUser(UserModel userModel);
-  List<UserModel> retriveUsers();
-  UserModel retrieveUser(String uId);
-  updateUser(String uId);
-  String deleteUser(String uId);
+  Future<ResponseModel?> createUser(UserModel userModel);
+  ResponseModel retriveUsers();
+  ResponseModel retrieveUser(String uId);
+  ResponseModel updateUser(String uId);
+  ResponseModel deleteUser(String uId);
 }

@@ -3,8 +3,6 @@
  */
 package com.fixitnow;
 
-import org.gradle.api.Project;
-import org.gradle.api.Plugin;
 
 /**
  * A simple 'hello world' plugin.

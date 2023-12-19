@@ -2,7 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fixitnow/screens/common/components/camera_widget.dart';
 import 'package:fixitnow/screens/onboarding/onboarding_screen.dart';
-import 'package:fixitnow/stores/login/login_store.dart';
+import 'package:fixitnow/stores/session/session_context.dart';
 import 'package:fixitnow/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,8 +28,8 @@ class MyApp extends StatelessWidget {
         builder: (context, child) {
           return MultiProvider(
             providers: [
-              Provider<LoginStore>(
-                create: (_) => LoginStore(),
+              Provider<SessionContext>(
+                create: (_) => SessionContext(),
               )
             ],
             child: MaterialApp(

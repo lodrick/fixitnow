@@ -4,7 +4,7 @@ import 'package:fixitnow/models/role/role_model.dart';
 import 'package:fixitnow/models/user/user_model.dart';
 import 'package:fixitnow/screens/loader_hub.dart';
 import 'package:fixitnow/screens/register/components/service_dialog.dart';
-import 'package:fixitnow/stores/login/login_store.dart';
+import 'package:fixitnow/stores/session/session_context.dart';
 import 'package:fixitnow/utils/custom_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +36,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _controllerFirstName = TextEditingController();
   final TextEditingController _controllerLastName = TextEditingController();
   final TextEditingController _controllerEmail = TextEditingController();
-  final TextEditingController _controllerAbout = TextEditingController();
+  //final TextEditingController _controllerAbout = TextEditingController();
 
   late SMITrigger error;
   late SMITrigger success;
@@ -133,7 +133,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final screenHeight = MediaQuery.of(context).size.height;
     return WillPopScope(
       onWillPop: () => _onBackButtonBoubleClicked(context),
-      child: Consumer<LoginStore>(builder: (_, userStore, __) {
+      child: Consumer<SessionContext>(builder: (_, sessionContext, __) {
         return Observer(
           builder: (_) => LoaderHud(
             loading: RiveAnimation.asset(
@@ -141,7 +141,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               fit: BoxFit.cover,
               onInit: _onCheckRiveInit,
             ),
-            inAsyncCall: userStore.isloginLoading,
+            inAsyncCall: sessionContext.isloginLoading,
             child: Scaffold(
               backgroundColor: const Color.fromARGB(255, 243, 243, 243),
               extendBody: true,
@@ -162,12 +162,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         collapseMode: CollapseMode.pin,
                       ),
                     ),
-                    buildRegisterPane(context, userStore),
+                    buildRegisterPane(context, sessionContext),
                   ],
                 ),
               ),
-              bottomNavigationBar:
-                  buildBottomSignup(context: context, userStore: userStore),
+              bottomNavigationBar: buildBottomSignup(
+                  context: context, sessionContext: sessionContext),
             ),
           ),
         );
@@ -176,11 +176,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Widget buildBottomSignup(
-          {required BuildContext context, required LoginStore userStore}) =>
+          {required BuildContext context,
+          required SessionContext sessionContext}) =>
       Padding(
         padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
         child: ElevatedButton.icon(
-          onPressed: () {
+          onPressed: () async {
             debugPrint('_roles:< $_roles');
             Set<RoleModel> roleset = {};
 
@@ -197,9 +198,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
             UserModel userModel = UserModel.copy(
               firstName: _controllerFirstName.text.trim(),
               lastName: _controllerLastName.text.trim(),
-              about: _controllerAbout.text.trim(),
+              about: '_controllerAbout.text', //_controllerAbout.text.trim(),
               email: _controllerEmail.text.trim(),
-              isServiceProvider: isChecked,
+              serviceProvider: isChecked,
               authUid: widget.authId.trim(),
               phoneNumber: widget.phoneNumber.trim(),
               photoUrl:
@@ -210,7 +211,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
               updatedAt: DateTime.now(),
             );
 
-            userStore.registerUser(context: context, user: userModel);
+            sessionContext.registerUser(context: context, user: userModel);
+
+            /*UserController controller = UserController();
+
+            controller.createUser(userModel).then((value) {
+              setState(() {
+                //responseModel = value;
+                debugPrint(value!.message);
+                debugPrint('${value.status}');
+                debugPrint('${value.success}');
+                UserModel.fromJson(value.object);
+                debugPrint('${value.object}');
+              });
+            });*/
 
             roleset = {};
           },
@@ -237,7 +251,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       );
 
-  Widget buildRegisterPane(BuildContext context, LoginStore userStore) =>
+  Widget buildRegisterPane(
+          BuildContext context, SessionContext sessionContext) =>
       SliverToBoxAdapter(
         child: Container(
           padding: EdgeInsets.symmetric(

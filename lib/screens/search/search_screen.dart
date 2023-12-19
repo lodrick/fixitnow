@@ -65,14 +65,6 @@ class _SearchScreenState extends State<SearchScreen> {
                     color: CustomColor.kShadowColor,
                   ),
                 ),
-          const Positioned(
-            bottom: 23,
-            child: ListTile(
-              title: Text('Lodrick Mpanze'),
-              subtitle: Text(
-                  'Software developer with \n exceptional development skills'),
-            ),
-          ),
         ],
       ),
     );

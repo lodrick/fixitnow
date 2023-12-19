@@ -1,5 +1,5 @@
 import 'package:fixitnow/screens/loader_hub.dart';
-import 'package:fixitnow/stores/login/login_store.dart';
+import 'package:fixitnow/stores/session/session_context.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -96,10 +96,10 @@ class _SignInFormState extends State<SignInForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<LoginStore>(builder: (_, loginStore, __) {
+    return Consumer<SessionContext>(builder: (_, sessionContext, __) {
       return Observer(
         builder: (_) => LoaderHud(
-          inAsyncCall: loginStore.isOtpLoading,
+          inAsyncCall: sessionContext.isOtpLoading,
           loading: Stack(children: <Widget>[
             RiveAnimation.asset(
               'assets/RiveAssets/check.riv',
@@ -113,7 +113,7 @@ class _SignInFormState extends State<SignInForm> {
             ),
           ]),
           child: Scaffold(
-            key: loginStore.loginScaffoldKey,
+            key: sessionContext.loginScaffoldKey,
             body: SingleChildScrollView(
               child: Stack(
                 children: [
@@ -142,7 +142,7 @@ class _SignInFormState extends State<SignInForm> {
                                   number.phoneNumber!.length == 12) {
                                 debugPrint(
                                     'number.phoneNumber ${_validPhoneNumber.phoneNumber}');
-                                loginStore.getCodeWithPhoneNumber(
+                                sessionContext.getCodeWithPhoneNumber(
                                   context,
                                   _validPhoneNumber.phoneNumber.toString(),
                                 );
@@ -195,7 +195,7 @@ class _SignInFormState extends State<SignInForm> {
                             color: Colors.black54,
                           ),
                         ),
-                        loginStore.isShowPasscode
+                        sessionContext.isShowPasscode
                             ? Container(
                                 padding: EdgeInsets.symmetric(horizontal: 5.w),
                                 child: OTPTextField(
@@ -214,7 +214,7 @@ class _SignInFormState extends State<SignInForm> {
                                             .phoneNumber!.isNotEmpty) {
                                       debugPrint(
                                           '_validPhoneNumber: ${_validPhoneNumber.phoneNumber}');
-                                      loginStore.validateOtpAndLogin(
+                                      sessionContext.validateOtpAndLogin(
                                           context, pin.trim());
                                     }
                                   },

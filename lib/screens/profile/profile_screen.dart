@@ -5,7 +5,7 @@ import 'package:fixitnow/screens/loader_hub.dart';
 import 'package:fixitnow/screens/profile/components/button_widget.dart';
 import 'package:fixitnow/screens/profile/components/numbers_widget.dart';
 import 'package:fixitnow/screens/profile/components/profile_widget.dart';
-import 'package:fixitnow/stores/login/login_store.dart';
+import 'package:fixitnow/stores/session/session_context.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -45,7 +45,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       RatingDto('50', 'Followers'),
     ];
 
-    return Consumer<LoginStore>(builder: (_, loginStore, __) {
+    return Consumer<SessionContext>(builder: (_, sessionContext, __) {
       return Observer(
         builder: (_) => LoaderHud(
             inAsyncCall: false,
@@ -74,13 +74,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         },
                       ),
                       SizedBox(height: size.height * 0.025),
-                      buildName(loginStore.currentUser!),
+                      //buildName(loginStore.currentUser!),
                       SizedBox(height: size.height * 0.03),
                       Center(child: buildUpgradeButton()),
                       SizedBox(height: size.height * 0.03),
                       NumbersWidget(ratingDto: ratingDtos),
                       SizedBox(height: size.height * 0.02),
-                      buildAbout(loginStore.currentUser!),
+                      //buildAbout(loginStore.currentUser!),
                     ],
                   ),
                 ),
