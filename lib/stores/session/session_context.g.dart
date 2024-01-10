@@ -217,6 +217,22 @@ mixin _$SessionContext on SessionContextBase, Store {
     });
   }
 
+  late final _$currentPositionAtom =
+      Atom(name: 'SessionContextBase.currentPosition', context: context);
+
+  @override
+  Position? get currentPosition {
+    _$currentPositionAtom.reportRead();
+    return super.currentPosition;
+  }
+
+  @override
+  set currentPosition(Position? value) {
+    _$currentPositionAtom.reportWrite(value, super.currentPosition, () {
+      super.currentPosition = value;
+    });
+  }
+
   late final _$isAlreadyAuthenticatedAsyncAction = AsyncAction(
       'SessionContextBase.isAlreadyAuthenticated',
       context: context);
@@ -261,8 +277,10 @@ mixin _$SessionContext on SessionContextBase, Store {
       AsyncAction('SessionContextBase.retriveUser', context: context);
 
   @override
-  Future<UserModel?> retriveUser(String authUid) {
-    return _$retriveUserAsyncAction.run(() => super.retriveUser(authUid));
+  Future<void> retriveUser(
+      {required BuildContext context, required String authUid}) {
+    return _$retriveUserAsyncAction
+        .run(() => super.retriveUser(context: context, authUid: authUid));
   }
 
   late final _$retrieveUsersAsyncAction =
@@ -296,7 +314,8 @@ users: ${users},
 responseModel: ${responseModel},
 loginScaffoldKey: ${loginScaffoldKey},
 otpScaffoldKey: ${otpScaffoldKey},
-firebaseUser: ${firebaseUser}
+firebaseUser: ${firebaseUser},
+currentPosition: ${currentPosition}
     ''';
   }
 }

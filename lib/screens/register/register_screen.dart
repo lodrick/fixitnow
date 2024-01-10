@@ -192,9 +192,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 roleset.add(element);
               }
             }
-            debugPrint('authId:< ${widget.authId}');
-            debugPrint('phoneNumber:< ${widget.phoneNumber}');
-
             UserModel userModel = UserModel.copy(
               firstName: _controllerFirstName.text.trim(),
               lastName: _controllerLastName.text.trim(),
@@ -210,6 +207,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
               status: 1,
               updatedAt: DateTime.now(),
             );
+
+            debugPrint('userModel ${userModel.firstName}');
 
             sessionContext.registerUser(context: context, user: userModel);
 

@@ -10,6 +10,7 @@ import 'package:fixitnow/screens/home/home_screen.dart';
 import 'package:fixitnow/screens/onboarding/onboarding_screen.dart';
 import 'package:fixitnow/screens/register/register_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:mobx/mobx.dart';
 import 'package:http/http.dart' as http;
 
@@ -52,6 +53,9 @@ abstract class SessionContextBase with Store {
 
   @observable
   User? firebaseUser;
+
+  @observable
+  Position? currentPosition;
 
   @action
   Future<bool> isAlreadyAuthenticated() async {
@@ -168,42 +172,7 @@ abstract class SessionContextBase with Store {
       isShowLoading = true;
       isShowConfetti = true;
 
-      retriveUser(firebaseUser!.uid).then((value) {
-        //currentUser = value;
-        debugPrint('values ${value!.toJson()}');
-        Future.delayed(const Duration(seconds: 5));
-
-        //if (currentUser != null) {
-        Future.delayed(const Duration(seconds: 5));
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(
-              builder: (_) => const EntryPoint(widget: HomeScreen()),
-            ),
-            (route) => false);
-        /*} else {
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(
-              builder: (_) => RegisterScreen(
-                phoneNumber: firebaseUser!.phoneNumber!,
-                authId: firebaseUser!.uid,
-              ),
-            ),
-            (route) => false);
-        }*/
-      }).catchError((onError) {
-        debugPrint('Errror on user register $onError');
-      });
-      debugPrint('currentUser $currentUser');
-      if (!isUserCreated) {
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(
-              builder: (_) => RegisterScreen(
-                phoneNumber: firebaseUser!.phoneNumber!,
-                authId: firebaseUser!.uid,
-              ),
-            ),
-            (route) => false);
-      }
+      retriveUser(context: context, authUid: firebaseUser!.uid);
     }
     isloginLoading = false;
     isOtpLoading = false;
@@ -213,7 +182,6 @@ abstract class SessionContextBase with Store {
   Future<void> registerUser(
       {required BuildContext context, required UserModel user}) async {
     try {
-      debugPrint('Request Body: ${user.toJson()}');
       final response = await http.post(Uri.parse('$uri/v1/customer'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
@@ -221,7 +189,7 @@ abstract class SessionContextBase with Store {
           body: jsonEncode(user));
 
       final json = jsonDecode(response.body)['object'] as Map<String, dynamic>;
-      debugPrint('json $json');
+      debugPrint('registerUser json $json');
       currentUser = UserModel.fromJson(json);
       Future.delayed(const Duration(seconds: 1), () {
         Navigator.push(
@@ -238,7 +206,8 @@ abstract class SessionContextBase with Store {
   }
 
   @action
-  Future<UserModel?> retriveUser(String authUid) async {
+  Future<void> retriveUser(
+      {required BuildContext context, required String authUid}) async {
     try {
       final response = await http.get(Uri.parse('$uri/v1/customerss/$authUid'),
           headers: <String, String>{});
@@ -249,18 +218,36 @@ abstract class SessionContextBase with Store {
           jsonDecode(response.body)['status'] == 200) {
         json = jsonDecode(response.body)['object'] as Map<String, dynamic>;
         currentUser = UserModel.fromJson(json);
-        debugPrint('json $json');
+        debugPrint('retriveUser json $json');
         isUserCreated = true;
-        return UserModel.fromJson(json);
+        Future.delayed(const Duration(seconds: 1), () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const EntryPoint(widget: HomeScreen()),
+            ),
+          );
+          isUserCreated = true;
+        });
       } else if (response.body.isNotEmpty &&
           jsonDecode(response.body)['status'] == 404) {
         currentUser = null;
         isUserCreated = false;
+
+        Future.delayed(const Duration(seconds: 1), () {
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                builder: (_) => RegisterScreen(
+                  phoneNumber: firebaseUser!.phoneNumber!,
+                  authId: firebaseUser!.uid,
+                ),
+              ),
+              (route) => false);
+        });
       }
     } on Exception catch (e) {
       debugPrint('$e');
     }
-    return null;
   }
 
   @action
@@ -287,6 +274,11 @@ abstract class SessionContextBase with Store {
     return users!;
   }
 
+  /*@action
+  void getCurrentLocation() async {
+    currentPosition = await GeoLocatorService.getLocation();
+  }*/
+
   @action
   Future<void> signOut(BuildContext context) async {
     Future.delayed(const Duration(seconds: 2), () {
@@ -296,7 +288,7 @@ abstract class SessionContextBase with Store {
     });
 
     await _auth.signOut();
-    //currentUser = null;
-    //firebaseUser = null;
+    currentUser = null;
+    firebaseUser = null;
   }
 }

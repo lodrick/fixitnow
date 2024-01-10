@@ -1,8 +1,15 @@
+import 'package:fixitnow/models/location/location.dart';
+import 'package:fixitnow/models/service/service_model.dart';
 import 'package:fixitnow/models/sub_service.dart';
+import 'package:fixitnow/screens/loader_hub.dart';
+import 'package:fixitnow/stores/session/session_context.dart';
 import 'package:fixitnow/utils/custom_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:rive/rive.dart';
 import 'package:searchfield/searchfield.dart';
 
 class ServiceForm extends StatefulWidget {
@@ -16,6 +23,21 @@ class _ServiceFormState extends State<ServiceForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController titleController = TextEditingController();
+  late SMITrigger error;
+  late SMITrigger success;
+  late SMITrigger reset;
+  late SMITrigger confetti;
+
+  void _onCheckRiveInit(Artboard artboard) {
+    StateMachineController? controller =
+        StateMachineController.fromArtboard(artboard, 'State Machine 1');
+
+    artboard.addController(controller!);
+    error = controller.findInput<bool>('Error') as SMITrigger;
+    success = controller.findInput<bool>('Check') as SMITrigger;
+    reset = controller.findInput<bool>('Reset') as SMITrigger;
+  }
+
   String? _selectedItem;
 
   List<String> suggestions = [
@@ -48,49 +70,80 @@ class _ServiceFormState extends State<ServiceForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              searchInput(),
-              inputTextField(
-                hintText: 'Please insert service description ',
-                iconData: Icons.person_2_rounded,
-                context: context,
-                controller: descriptionController,
-                maxLines: 1,
+    return Consumer<SessionContext>(builder: (_, sessionContext, __) {
+      return Observer(
+        builder: (_) => LoaderHud(
+          inAsyncCall: sessionContext.isloginLoading,
+          loading: RiveAnimation.asset(
+            'assets/RiveAssets/check.riv',
+            fit: BoxFit.cover,
+            onInit: _onCheckRiveInit,
+          ),
+          child: Scaffold(
+            body: SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    searchInput(),
+                    inputTextField(
+                      hintText: 'Please insert service description ',
+                      iconData: Icons.person_2_rounded,
+                      context: context,
+                      controller: descriptionController,
+                      maxLines: 1,
+                    ),
+                    groupCheckBox()
+                  ],
+                ),
               ),
-              groupCheckBox()
-            ],
+            ),
+            bottomNavigationBar: buildBottomContinue(
+              context: context,
+              press: () {
+                debugPrint(subServices.toString());
+                List<String> subServicess = [];
+
+                var allSubServices = subServices
+                    .map<SubService>((e) => SubService.fromJson(e))
+                    .toList();
+                for (SubService subService in allSubServices) {
+                  if (subService.isChecked == true) {
+                    debugPrint(subService.title);
+                    subServicess.add(subService.title);
+                  }
+                }
+
+                ServiceModel.copy(
+                    title: titleController.text.trim(),
+                    description: descriptionController.text.trim(),
+                    subServices: subServicess,
+                    photoUrl: '',
+                    fkProductId: 0,
+                    fkUserId: 0,
+                    location: Location.copy(lat: 0, lng: 0),
+                    createdAt: DateTime.now(),
+                    updatedAt: DateTime.now());
+
+                Navigator.of(context).pop();
+              },
+            ),
           ),
         ),
-      ),
-      bottomNavigationBar: buildBottomContinue(context: context),
-    );
+      );
+    });
   }
 
-  Widget buildBottomContinue({required BuildContext context}) => Padding(
+  Widget buildBottomContinue(
+          {required BuildContext context, required VoidCallback press}) =>
+      Padding(
         padding: EdgeInsets.symmetric(
           horizontal: 10.w,
           vertical: 8.h,
         ),
         child: ElevatedButton.icon(
-          onPressed: () {
-            debugPrint(subServices.toString());
-            var allSubServices = subServices
-                .map<SubService>((e) => SubService.fromJson(e))
-                .toList();
-
-            for (SubService subService in allSubServices) {
-              if (subService.isChecked == true) {
-                debugPrint(subService.title);
-              }
-            }
-            Navigator.of(context).pop();
-          },
+          onPressed: press,
           style: ElevatedButton.styleFrom(
             backgroundColor: CustomColor.primaryColors,
             minimumSize: const Size(double.infinity, 56),

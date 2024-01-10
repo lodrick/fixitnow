@@ -1,6 +1,4 @@
 import 'package:fixitnow/models/location/location.dart';
-import 'package:fixitnow/models/product/product.dart';
-import 'package:fixitnow/models/user/user_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'service_model.g.dart';
@@ -9,11 +7,11 @@ part 'service_model.g.dart';
 class ServiceModel {
   int? serviceId;
   final String title;
-  final String discription;
+  final String description;
   final List<String> subServices;
   final String photoUrl;
-  final ProductModel productModel;
-  final UserModel userModel;
+  final int fkProductId;
+  final int fkUserId;
   final DateTime createdAt;
   final DateTime updatedAt;
   final Location location;
@@ -21,27 +19,27 @@ class ServiceModel {
   ServiceModel(
     this.serviceId,
     this.title,
-    this.discription,
+    this.description,
     this.subServices,
     this.photoUrl,
-    this.productModel,
-    this.userModel,
+    this.fkProductId,
+    this.fkUserId,
     this.location,
     this.createdAt,
     this.updatedAt,
   );
 
-  ServiceModel.copy(
-    this.title,
-    this.discription,
-    this.subServices,
-    this.photoUrl,
-    this.productModel,
-    this.userModel,
-    this.location,
-    this.createdAt,
-    this.updatedAt,
-  );
+  ServiceModel.copy({
+    required this.title,
+    required this.description,
+    required this.subServices,
+    required this.photoUrl,
+    required this.fkProductId,
+    required this.fkUserId,
+    required this.location,
+    required this.createdAt,
+    required this.updatedAt,
+  });
 
   factory ServiceModel.fromJson(Map<String, dynamic> json) =>
       _$ServiceModelFromJson(json);
