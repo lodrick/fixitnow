@@ -172,7 +172,10 @@ abstract class SessionContextBase with Store {
       isShowLoading = true;
       isShowConfetti = true;
 
-      retriveUser(context: context, authUid: firebaseUser!.uid);
+      retriveUser(context: context, authUid: firebaseUser!.uid)
+          .catchError((onError) {
+        debugPrint('$onError');
+      });
     }
     isloginLoading = false;
     isOtpLoading = false;
