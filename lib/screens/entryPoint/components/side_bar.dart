@@ -1,4 +1,5 @@
 import 'package:fixitnow/models/menu.dart';
+import 'package:fixitnow/screens/entryPoint/entry_point.dart';
 import 'package:fixitnow/screens/loader_hub.dart';
 import 'package:fixitnow/stores/session/session_context.dart';
 import 'package:fixitnow/utils/custom_color.dart';
@@ -101,7 +102,17 @@ class _SideBarState extends State<SideBar> {
                                 RiveUtils.chnageSMIBoolState(menu.rive.status!);
                                 setState(() {
                                   selectedSideMenu = menu;
+
+                                  debugPrint('${menu.widget}');
                                 });
+                                Navigator.of(context).pop();
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        EntryPoint(widget: menu.widget),
+                                  ),
+                                );
                               },
                               riveOnInit: (artboard) {
                                 menu.rive.status = RiveUtils.getRiveInput(

@@ -3,6 +3,7 @@ import 'package:fixitnow/screens/entryPoint/entry_point.dart';
 import 'package:fixitnow/screens/home/home_screen.dart';
 import 'package:fixitnow/screens/notification/notifications.dart';
 import 'package:fixitnow/screens/profile/profile_screen.dart';
+import 'package:fixitnow/screens/register/components/service_form.dart';
 import 'package:fixitnow/screens/search/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'rive_model.dart';
@@ -56,13 +57,13 @@ List<Menu> sidebarMenus = [
 ];
 List<Menu> sidebarMenus2 = [
   Menu(
-      title: "History",
+      title: "Service provider",
       rive: RiveModel(
         src: "assets/RiveAssets/icons.riv",
         artboard: "TIMER",
         stateMachineName: "TIMER_Interactivity",
       ),
-      widget: const HomeScreen()),
+      widget: const ServiceForm()),
   Menu(
       title: "Notifications",
       rive: RiveModel(

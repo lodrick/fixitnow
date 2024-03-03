@@ -2,11 +2,13 @@ import 'dart:async';
 
 import 'package:fixitnow/screens/home/components/round_button.dart';
 import 'package:fixitnow/services/geolocator_service.dart';
+import 'package:fixitnow/utils/app_comps.dart';
 import 'package:fixitnow/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:searchfield/searchfield.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -17,6 +19,7 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   final Completer<GoogleMapController> _googleMapController = Completer();
+  final TextEditingController titleController = TextEditingController();
 
   Position? currentPosition;
   LatLng? geoLocationPoint;
@@ -34,6 +37,7 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   bool isDisplaySearch = false;
+  String? _selectedItem;
 
   @override
   Widget build(BuildContext context) {
@@ -64,96 +68,60 @@ class _SearchScreenState extends State<SearchScreen> {
                       visible: true,
                     ),
                   },
+                  onTap: (argument) {
+                    debugPrint('argument argument argument $argument');
+                  },
                 )
               : const Center(
                   child: CircularProgressIndicator(
                     color: CustomColor.kShadowColor,
                   ),
                 ),
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: size.width * .03,
-                vertical: size.height * .045,
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  SizedBox(width: size.width * 0.113),
-                  isDescriptionDisplay == true
-                      ? Expanded(
-                          child: Container(
-                            height: size.width * 0.090.h,
-                            margin: EdgeInsets.only(
-                              top: size.height * 0.02,
-                              bottom: size.height * 0.009,
-                            ),
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black12,
-                                  offset: const Offset(0, 3),
-                                  blurRadius: 20.r,
-                                ),
-                              ],
-                            ),
-                            child: TextField(
-                              onChanged: (value) {
-                                debugPrint(value);
-                              },
-                              style: TextStyle(
-                                color: Theme.of(context)
-                                    .primaryColor
-                                    .withOpacity(0.6.sp),
-                                fontSize: 18.0.sp,
-                              ),
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(30.r),
-                                  ),
-                                ),
-                                hintText: 'Search',
-                                hintStyle: TextStyle(
-                                  fontSize: 14.0.sp,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                                filled: true,
-                                fillColor: Colors.white,
-                                prefixIcon: GestureDetector(
-                                  child: const Icon(Icons.arrow_back),
-                                  onTap: () {
-                                    setState(() {
-                                      isDisplaySearch = !isDisplaySearch;
-                                    });
-                                  },
-                                ),
-                                suffixIcon: GestureDetector(
-                                  child: const Icon(Icons.search),
-                                  onTap: () {
-                                    debugPrint('Search');
-                                  },
-                                ),
-                              ),
-                            ),
+          Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: size.width * .03,
+              vertical: size.height * .045,
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                SizedBox(width: size.width * 0.113),
+                isDisplaySearch == true
+                    ? Expanded(
+                        child: Container(
+                          height: size.width * 0.090.h,
+                          margin: EdgeInsets.only(
+                            top: size.height * 0.02,
+                            bottom: size.height * 0.009,
                           ),
-                        )
-                      : const SizedBox.shrink(),
-                  isDescriptionDisplay == false
-                      ? RoundButton(
-                          press: () {
-                            setState(() {
-                              isDisplaySearch = !isDisplaySearch;
-                            });
-                          },
-                          size: size,
-                          riveAssetsUrl: 'assets/icons/search.svg',
-                        )
-                      : const SizedBox.shrink(),
-                ],
-              ),
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black45,
+                                offset: const Offset(0, 3),
+                                blurRadius: 20.r,
+                              ),
+                            ],
+                          ),
+                          child: searchInput(
+                            hint: 'Searvice search',
+                          ),
+                        ),
+                      )
+                    : const SizedBox.shrink(),
+                isDisplaySearch == false
+                    ? RoundButton(
+                        press: () {
+                          setState(() {
+                            isDisplaySearch = !isDisplaySearch;
+                          });
+                        },
+                        size: size,
+                        riveAssetsUrl: 'assets/icons/search.svg',
+                      )
+                    : const SizedBox.shrink(),
+              ],
             ),
           ),
         ],
@@ -203,11 +171,71 @@ class _SearchScreenState extends State<SearchScreen> {
     };
   }
 
-  // var  circles = {
-  //   Circle(
-  //     circleId: const CircleId("markerId"),
-  //     center:  LatLng(latitude, longitude),
-  //     radius: 4000.0,
-  //   )
-  // };
+  Widget searchInput({
+    required String hint,
+  }) {
+    return SearchField(
+      hint: hint,
+      searchInputDecoration: InputDecoration(
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 5.0,
+        ),
+        prefixIcon: GestureDetector(
+          child: const Icon(Icons.arrow_back),
+          onTap: () {
+            setState(() {
+              isDisplaySearch = !isDisplaySearch;
+            });
+          },
+        ),
+        fillColor: Colors.white,
+        filled: true,
+        border: OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.all(Radius.circular(30.r)),
+        ),
+      ),
+      maxSuggestionsInViewPort: 6,
+      itemHeight: 50,
+      suggestionsDecoration: SuggestionDecoration(
+        padding: REdgeInsets.symmetric(horizontal: 10.0.w),
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(15.r),
+        shape: BoxShape.rectangle,
+      ),
+      controller: titleController,
+      onSearchTextChanged: (value) {
+        final filter = AppComps.suggestions
+            .where((element) =>
+                element.toLowerCase().contains(value.toLowerCase()))
+            .toList();
+        setState(() {
+          _selectedItem = value;
+        });
+        debugPrint(_selectedItem);
+        return filter
+            .map((e) => SearchFieldListItem<String>(
+                  e,
+                  child: Text(
+                    e,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.black54,
+                    ),
+                  ),
+                ))
+            .toList();
+      },
+      suggestions: AppComps.suggestions
+          .map((e) => SearchFieldListItem<String>(e,
+              child: Text(
+                e,
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: Colors.black54,
+                ),
+              )))
+          .toList(),
+    );
+  }
 }

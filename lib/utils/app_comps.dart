@@ -11,4 +11,22 @@ class AppComps {
           ),
         ),
       );
+
+  static List<String> suggestions = [
+    'Afghanistan',
+    'Turkey',
+    'Germany',
+    'France',
+    'Italy',
+    'Spain',
+    'United Kingdom',
+    'United States',
+    'Canada',
+    'Australia',
+    'New Zealand',
+    'India',
+    'Indonesia',
+    'Bangladesh',
+    'Sri Lanka',
+  ];
 }

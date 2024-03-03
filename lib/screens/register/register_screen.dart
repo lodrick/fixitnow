@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:fixitnow/models/role/role_model.dart';
 import 'package:fixitnow/models/user/user_model.dart';
 import 'package:fixitnow/screens/loader_hub.dart';
-import 'package:fixitnow/screens/register/components/service_dialog.dart';
 import 'package:fixitnow/stores/session/session_context.dart';
 import 'package:fixitnow/utils/custom_color.dart';
 import 'package:flutter/cupertino.dart';
@@ -281,7 +280,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 controller: _controllerEmail,
                 maxLines: 1,
               ),
-              CheckboxListTile(
+              /*CheckboxListTile(
                 visualDensity: VisualDensity.compact,
                 title: const Text(
                   'I want to be a service provider',
@@ -313,7 +312,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     });
                   });
                 },
-              ),
+              ),*/
               // isChecked
               //     ? inputTextField(
               //         hintText: 'Say something about your work',
