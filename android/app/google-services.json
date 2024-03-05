@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1043837303555:android:bd4ec1925ed65eff9b8736",
+        "mobilesdk_app_id": "1:1043837303555:android:fa818bc1f0c4797a9b8736",
         "android_client_info": {
-          "package_name": "com.fixitnow"
+          "package_name": "za.co.rea_code.fixitnow"
         }
       },
       "oauth_client": [],
